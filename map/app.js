@@ -304,7 +304,7 @@ function renderMainContent() {
     .map(
       (image) => `
         <figure class="pc-photo">
-          <img src="${image.src}" alt="${image.caption || activeProvince.name}" loading="lazy" />
+          <img src="${image.src}" alt="${image.caption || activeProvince.name}" loading="eager" />
           <figcaption>${image.caption || ""}</figcaption>
         </figure>`
     )
@@ -350,6 +350,45 @@ function renderMainContent() {
     if (img.complete && img.naturalWidth === 0) markMissing();
     img.addEventListener("error", markMissing);
   });
+
+  // Lớp phủ "Vui lòng chờ" cho tới khi mọi ảnh trong nội dung tải xong
+  showContentLoading();
+}
+
+// Phủ spinner + dòng chữ "Vui lòng chờ" lên main-content cho tới khi tất cả ảnh tải xong.
+function showContentLoading() {
+  const imgs = [...provinceContent.querySelectorAll(".pc-photo img")];
+  if (imgs.length === 0) return; // không có ảnh -> nội dung sẵn sàng ngay
+
+  const loading = document.createElement("div");
+  loading.className = "pc-loading";
+  loading.innerHTML =
+    '<div class="pc-loading-spinner" role="status" aria-label="Đang tải"></div>' +
+    '<p class="pc-loading-text">Vui lòng chờ, đang tải nội dung…</p>';
+  provinceContent.appendChild(loading);
+
+  let remaining = imgs.length;
+  let finished = false;
+  const hide = () => {
+    if (finished) return;
+    finished = true;
+    loading.classList.add("is-hidden");
+    setTimeout(() => loading.remove(), 400);
+  };
+  const settle = () => {
+    remaining -= 1;
+    if (remaining <= 0) hide();
+  };
+
+  imgs.forEach((img) => {
+    if (img.complete) settle();
+    else {
+      img.addEventListener("load", settle, { once: true });
+      img.addEventListener("error", settle, { once: true });
+    }
+  });
+
+  setTimeout(hide, 6000); // van an toàn: tối đa 6 giây thì vẫn hiện nội dung
 }
 
 function renderDetail() {
@@ -413,9 +452,7 @@ function selectProvince(province, scrollToContent) {
   renderMainContent();
   renderList();
   hideTooltip();
-  if (scrollToContent) {
-    provinceContent.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  // Không tự cuộn xuống phần nội dung — để người dùng tự xem khi muốn.
 }
 
 /* ===== Phóng to / kéo bản đồ ===== */

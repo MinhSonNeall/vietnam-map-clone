@@ -1,0 +1,5 @@
+# robots.txt — Việt Nam Sử Ký
+User-agent: *
+Allow: /
+
+Sitemap: http://fptlichsuviet.io.vn/sitemap.xml
