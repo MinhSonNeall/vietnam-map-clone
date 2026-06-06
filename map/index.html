@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lịch sử Việt Nam · Bản đồ 34 tỉnh thành</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="../loader.css" />
+  </head>
+  <body>
+    <!-- Vòng tròn tải trang (ẩn khi tải xong) -->
+    <div id="page-loader"><div class="pl-spinner" role="status" aria-label="Đang tải"></div></div>
+
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">Bản đồ lịch sử</p>
+        <h1>Lịch sử Việt Nam qua 34 tỉnh/thành</h1>
+      </div>
+      <div class="header-actions">
+        <a class="home-link" href="../index.html" title="Về trang chủ">← Trang chủ</a>
+        <button class="icon-button" id="zoomOut" type="button" title="Thu nhỏ" aria-label="Thu nhỏ">−</button>
+        <button class="icon-button" id="resetMap" type="button" title="Về mặc định" aria-label="Về mặc định">⌂</button>
+        <button class="icon-button" id="zoomIn" type="button" title="Phóng to" aria-label="Phóng to">+</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="map-panel" aria-label="Bản đồ Việt Nam">
+        <div class="toolbar">
+          <label class="search-field">
+            <span>Tìm tỉnh/thành</span>
+            <input id="searchInput" type="search" placeholder="VD: Đà Nẵng, Lào Cai..." autocomplete="off" />
+          </label>
+          <label class="select-field">
+            <span>Vùng</span>
+            <select id="regionFilter">
+              <option value="all">Tất cả</option>
+              <option value="Bắc Bộ">Bắc Bộ</option>
+              <option value="Bắc Trung Bộ">Bắc Trung Bộ</option>
+              <option value="Nam Trung Bộ">Nam Trung Bộ</option>
+              <option value="Tây Nguyên">Tây Nguyên</option>
+              <option value="Đông Nam Bộ">Đông Nam Bộ</option>
+              <option value="Tây Nam Bộ">Tây Nam Bộ</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="map-shell">
+          <div class="map-viewport" id="mapViewport">
+            <div class="map-canvas" id="mapCanvas"></div>
+          </div>
+          <div class="map-hint">Kéo để di chuyển, lăn chuột để phóng to/thu nhỏ · Bấm vào tỉnh để xem lịch sử</div>
+        </div>
+      </section>
+
+      <aside class="info-panel" aria-live="polite">
+        <div class="summary-grid">
+          <div>
+            <strong>34</strong>
+            <span>Đơn vị</span>
+          </div>
+          <div>
+            <strong>6</strong>
+            <span>Thành phố</span>
+          </div>
+          <div>
+            <strong>28</strong>
+            <span>Tỉnh</span>
+          </div>
+        </div>
+
+        <article class="province-detail" id="provinceDetail"></article>
+
+        <div class="list-header">
+          <h2>Danh sách tỉnh/thành</h2>
+          <span id="resultCount">34 kết quả</span>
+        </div>
+        <div class="province-list" id="provinceList"></div>
+      </aside>
+    </main>
+
+    <!-- Nội dung chi tiết của tỉnh/thành đang chọn -->
+    <section class="detail-band">
+      <article class="province-content" id="provinceContent"></article>
+    </section>
+
+    <div id="provinceTooltip" role="status" aria-live="polite"></div>
+
+    <script src="./map-svg.js"></script>
+    <script src="./history.js"></script>
+    <script src="../data/bac-bo.js"></script>
+    <script src="../data/bac-trung-bo.js"></script>
+    <script src="../data/nam-trung-bo.js"></script>
+    <script src="../data/tay-nguyen.js"></script>
+    <script src="../data/dong-nam-bo.js"></script>
+    <script src="../data/tay-nam-bo.js"></script>
+    <script src="./app.js"></script>
+    <script src="../loader.js"></script>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Việt Nam Sử Ký</title>
+    <link rel="stylesheet" href="./landing.css" />
+    <link rel="stylesheet" href="./loader.css" />
+  </head>
+  <body>
+    <!-- Vòng tròn tải trang (ẩn khi tải xong) -->
+    <div id="page-loader"><div class="pl-spinner" role="status" aria-label="Đang tải"></div></div>
+
+    <header class="lp-header">
+      <p class="eyebrow">Lịch sử Việt Nam · Góc nhìn người trẻ</p>
+      <h1>Việt Nam Sử Ký</h1>
+      <p class="lp-sub">
+        "Dân ta phải biết sử ta,
+        
+      </p>
+      <p class="lp-sub">
+        Cho tường gốc tích nước nhà Việt Nam."
+        
+      </p>
+      <p class="lp-sub">
+        ------Trích "Lịch sử nước ta" của Nguyễn Ái Quốc (Hồ Chí Minh)------
+        
+      </p>
+    </header>
+
+    <main class="lp-wrap">
+      <!-- Banner / Carousel -->
+      <h2 class="lp-section-title">Khám phá qua hình ảnh</h2>
+      <div class="carousel" id="carousel" aria-label="Bộ sưu tập hình ảnh lịch sử">
+        <div class="carousel-track" id="carouselTrack"></div>
+        <button class="carousel-btn prev" id="carouselPrev" type="button" aria-label="Ảnh trước">‹</button>
+        <button class="carousel-btn next" id="carouselNext" type="button" aria-label="Ảnh sau">›</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+      </div>
+
+      <!-- Hai thẻ điều hướng -->
+      <h2 class="lp-section-title">Bắt đầu khám phá</h2>
+      <div class="lp-cards">
+        <a class="lp-card" href="./map/index.html">
+          <div
+            class="lp-card-img"
+            style="background-image: url('./img/landing-page/hoang-thanh-thang-long-1.webp')"
+          ></div>
+          <div class="lp-card-body">
+            <h3>Lịch sử các tỉnh thành</h3>
+            <p>
+              Bản đồ Việt Nam tương tác 34 tỉnh/thành. Bấm vào từng vùng đất để đọc giới thiệu, mốc lịch sử,
+              nhân vật và di tích tiêu biểu.
+            </p>
+            <span class="lp-card-cta">Mở bản đồ →</span>
+          </div>
+        </a>
+
+        <a class="lp-card soon" href="./thoi-ky/index.html">
+          <div
+            class="lp-card-img"
+            style="background-image: url('./img/landing-page/dang-ngoai-dang-trong.webp')"
+          ></div>
+          <div class="lp-card-body">
+            <h3>Lịch sử Việt Nam qua các thời kì <span class="lp-badge-soon">Sắp ra mắt</span></h3>
+            <p>
+              Dòng chảy lịch sử dân tộc theo từng thời kì — từ thời dựng nước, các triều đại phong kiến đến
+              thời hiện đại, tóm lược những điều cốt lõi nhất.
+            </p>
+            <span class="lp-card-cta">Xem dòng thời gian →</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Giới thiệu -->
+      <section class="lp-intro">
+        <h2>Lịch sử, dưới một góc nhìn khác</h2>
+        <p>
+          Với nhiều bạn trẻ, lịch sử thường gắn liền với những trang sách dài, dày đặc số liệu và mốc thời gian —
+          dễ khiến việc tìm hiểu trở nên khô khan và mệt mỏi.
+        </p>
+        <p>
+          <span class="lp-quote">Việt Nam Sử Ký ra đời để thay đổi điều đó.</span>
+          Trang web lắng đọng lại những ý chính, những dấu mốc đáng nhớ nhất của lịch sử dân tộc, kể lại bằng
+          ngôn ngữ gần gũi, hình ảnh trực quan và bản đồ tương tác.
+        </p>
+        <p>
+          Mục tiêu của chúng tôi không phải thay thế sách sử, mà là một điểm chạm đầu tiên — nhẹ nhàng, dễ tiếp cận —
+          để khơi gợi sự tò mò, giúp người trẻ thấy lịch sử Việt Nam thật ra rất sống động và đáng tự hào.
+        </p>
+      </section>
+    </main>
+
+    <footer class="lp-footer">© Việt Nam Sử Ký — MLN111/Group 4</footer>
+
+    <script src="./landing.js"></script>
+    <script src="./loader.js"></script>
+  </body>
+</html>

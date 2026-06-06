@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lịch sử Việt Nam qua các thời kì · Việt Nam Sử Ký</title>
+    <link rel="stylesheet" href="../landing.css" />
+    <link rel="stylesheet" href="./timeline.css" />
+    <link rel="stylesheet" href="../loader.css" />
+  </head>
+  <body>
+    <!-- Vòng tròn tải trang (ẩn khi tải xong) -->
+    <div id="page-loader"><div class="pl-spinner" role="status" aria-label="Đang tải"></div></div>
+
+    <header class="lp-header">
+      <p class="eyebrow">Dòng thời gian</p>
+      <h1>Lịch sử Việt Nam qua các thời kì</h1>
+      <p class="lp-sub">
+        Những dấu mốc quan trọng nhất của lịch sử dân tộc, từ thời dựng nước đến thời hiện đại — kể lại
+        ngắn gọn trên một dòng thời gian.
+      </p>
+      <a class="tl-home" href="../index.html">← Về trang chủ</a>
+    </header>
+
+    <main class="lp-wrap">
+      <h2 class="lp-section-title">Dòng thời gian lịch sử</h2>
+
+      <p class="timeline-hint">Bấm vào một khoảng thời kỳ để phóng to khoảng đó; kéo dọc theo line hoặc bấm vào mốc để xem chi tiết</p>
+
+      <!-- Thanh line: mỗi khoảng có bong bóng chú thích phía trên + point nằm trên line -->
+      <div class="tl-line">
+        <div class="tl-bar" id="tlBar"></div>
+      </div>
+
+      <!-- Nội dung chi tiết của mốc đang chọn -->
+      <div class="tl-content" id="tlContent" hidden>
+        <div class="tl-nav">
+          <button class="tl-navbtn" id="tlPrev" type="button">‹ Trước</button>
+          <span class="tl-counter" id="tlCounter"></span>
+          <button class="tl-navbtn" id="tlNext" type="button">Sau ›</button>
+        </div>
+        <div class="tl-slides-wrap">
+          <div class="tl-slides" id="tlSlides"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="lp-footer">© Việt Nam Sử Ký — Dòng thời gian lịch sử dân tộc.</footer>
+
+    <script src="./data/dung-nuoc.js"></script>
+    <script src="./data/bac-thuoc.js"></script>
+    <script src="./data/doc-lap.js"></script>
+    <script src="./data/phong-kien.js"></script>
+    <script src="./data/phap-thuoc.js"></script>
+    <script src="./data/hien-dai.js"></script>
+    <script src="./timeline.js"></script>
+    <script src="../loader.js"></script>
+  </body>
+</html>

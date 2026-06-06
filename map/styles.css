@@ -1,0 +1,843 @@
+:root {
+  --bg: #2a0608;
+  --surface: #ffffff;
+  --ink: #2a1112;
+  --muted: #7a6566;
+  --line: #e7d2d2;
+  --teal: #b01622;        /* màu nhấn chính (đỏ) */
+  --red-deep: #7a0d12;
+  --red-bright: #d32f2f;
+  --gold: #f2c94c;
+  --green: #c9a227;       /* viền vàng kim thay cho xanh */
+  --amber: #d98324;
+  --red: #b01622;
+  --blue: #8a1b2a;
+  --shadow: 0 18px 45px rgba(60, 5, 8, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  background:
+    linear-gradient(rgba(70, 8, 10, 0.82), rgba(40, 4, 6, 0.9)),
+    url("https://hypeddit-gates-prod.s3.amazonaws.com/nt1v81_coverartmanual")
+      center top / cover no-repeat fixed,
+    #2a0608;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px clamp(16px, 3vw, 40px);
+  background: linear-gradient(135deg, #7a0d12, #b01622);
+  color: #fff;
+  border-bottom: 4px solid var(--gold);
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(26px, 4vw, 44px);
+  line-height: 1.05;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 14px;
+  margin-right: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home-link:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.icon-button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 23px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 22px;
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 22px clamp(14px, 3vw, 40px);
+}
+
+.map-panel,
+.info-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
+.map-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-field,
+.select-field {
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.search-field input,
+.select-field select {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--ink);
+  background: #fff;
+}
+
+.map-shell {
+  position: relative;
+  flex: 1;             /* lấp đầy chiều cao còn lại của map-panel (bỏ khoảng trắng) */
+  min-height: 720px;   /* sàn tối thiểu khi panel thấp */
+  overflow: hidden;
+  background: #fffdfd;
+}
+
+.map-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.map-viewport.dragging {
+  cursor: grabbing;
+}
+
+.map-canvas {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(72vw, 620px);
+  height: min(112vw, 930px);
+  transform-origin: center center;
+  touch-action: none;
+}
+
+/* Ảnh trống đồng làm nền — lớn hơn canvas để phủ trọn viewport,
+   nằm trong canvas nên vẫn zoom/kéo cùng bản đồ, và ở dưới bản đồ (z-index -1) */
+.map-canvas::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  background: url("../img/trong-dong-2.png") center / contain no-repeat;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ===== Bản đồ SVG tương tác ===== */
+#mapCanvas svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 18px 22px rgba(60, 5, 8, 0.4));
+  user-select: none;
+}
+
+/* Ẩn tên tỉnh và các điểm đánh dấu (chấm/sao) có sẵn trong ảnh gốc */
+#mapCanvas svg text,
+#mapCanvas svg .cls-20 {
+  display: none !important;
+}
+
+/* Các đường viền mảnh trang trí (biên giới/bờ biển) trong ảnh gốc */
+#mapCanvas svg .cls-4 {
+  fill: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+/* Mỗi tỉnh/thành */
+.province {
+  cursor: pointer;
+  outline: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 0.18s ease, transform 0.18s ease, filter 0.18s ease;
+}
+
+/* Quần đảo Hoàng Sa & Trường Sa: phóng to sẵn cho dễ nhìn */
+.province[data-p="quan-dao-hoang-sa"],
+.province[data-p="quan-dao-truong-sa"] {
+  --base-scale: 2.4;
+  transform: scale(var(--base-scale));
+}
+
+.province .p-area {
+  fill: #c62828 !important;
+  stroke: #f2c94c;
+  stroke-width: 2.5px;
+  transition: fill 0.18s ease, stroke 0.18s ease, stroke-width 0.18s ease;
+}
+
+/* Hover (hoặc focus) -> làm mờ các tỉnh còn lại */
+#mapCanvas svg:has(.province.hovered, .province:focus-visible)
+  .province:not(.hovered):not(:focus-visible) {
+  opacity: 0.25;
+}
+
+/* Tỉnh/đảo đang hover: phóng to + tách ra + đổi màu (đảo và tỉnh quản lý cùng phản ứng) */
+.province.hovered,
+.province:focus-visible {
+  transform: translate(var(--pop-x, 0px), var(--pop-y, 0px))
+    scale(calc(var(--base-scale, 1) * 1.1));
+  filter: drop-shadow(0 8px 10px rgba(60, 5, 8, 0.55));
+}
+
+.province.hovered .p-area,
+.province:focus-visible .p-area {
+  fill: #ff5252 !important;
+  stroke: #ffffff;
+  stroke-width: 4px;
+}
+
+/* Tỉnh đang được chọn */
+.province.is-active .p-area {
+  fill: #ff7043 !important;
+  stroke: #ffffff;
+  stroke-width: 4px;
+}
+
+/* Tỉnh bị lọc ra khỏi kết quả tìm kiếm/vùng */
+.province.filtered-out {
+  opacity: 0.1 !important;
+  pointer-events: none;
+}
+
+/* Tooltip hiện tên tỉnh khi hover */
+#provinceTooltip {
+  position: fixed;
+  z-index: 50;
+  display: none;
+  max-width: 220px;
+  padding: 7px 11px;
+  border-radius: 8px;
+  background: var(--red-deep);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.3;
+  box-shadow: 0 8px 24px rgba(60, 5, 8, 0.45);
+  pointer-events: none;
+}
+
+.map-hint {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 8px 11px;
+  border-radius: 8px;
+  background: rgba(122, 13, 18, 0.85);
+  color: #fff;
+  font-size: 12px;
+}
+
+.info-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: 1100px;
+  overflow: auto;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--line);
+}
+
+.summary-grid div {
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.summary-grid div + div {
+  border-left: 1px solid var(--line);
+}
+
+.summary-grid strong {
+  display: block;
+  color: var(--teal);
+  font-size: 26px;
+}
+
+.summary-grid span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.province-detail {
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.province-detail h2 {
+  margin-bottom: 8px;
+  font-size: 24px;
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  border-radius: 999px;
+  padding: 0 10px;
+  background: #fbe4e4;
+  color: var(--red-deep);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.detail-grid div {
+  min-height: 66px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f8fafb;
+}
+
+.detail-grid span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.detail-grid strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 18px 10px;
+}
+
+.list-header h2 {
+  margin-bottom: 0;
+  font-size: 18px;
+}
+
+.list-header span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.province-list {
+  display: grid;
+  gap: 8px;
+  padding: 0 18px 18px;
+}
+
+.province-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.province-item:hover,
+.province-item.active {
+  border-color: var(--teal);
+  background: #f0faf8;
+}
+
+.province-item strong,
+.province-item span {
+  display: block;
+}
+
+.province-item strong {
+  font-size: 15px;
+}
+
+.province-item span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.province-item em {
+  color: var(--teal);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+}
+
+.content-band,
+.faq,
+.source-footer {
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 0 clamp(14px, 3vw, 40px) 24px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.content-grid article,
+.faq {
+  color: #33434b;
+}
+
+.content-grid article,
+.faq details {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 18px;
+}
+
+.content-grid h2,
+.faq h2 {
+  color: var(--ink);
+  font-size: 22px;
+}
+
+.faq details + details {
+  margin-top: 10px;
+}
+
+.faq summary {
+  cursor: pointer;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.faq p,
+.content-grid p {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.source-footer {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.source-footer {
+  color: #f3d6d6;
+}
+
+.source-footer a {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+/* ===== Phần lịch sử ===== */
+.history {
+  margin-top: 16px;
+  border-top: 2px dashed var(--line);
+  padding-top: 14px;
+}
+
+.history-summary {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--red);
+  border-radius: 0 8px 8px 0;
+  background: #fdf1f1;
+  color: #3a2122;
+  line-height: 1.6;
+  font-size: 14.5px;
+}
+
+.history-block {
+  margin-bottom: 16px;
+}
+
+.history-block h3 {
+  margin: 0 0 8px;
+  color: var(--red-deep);
+  font-size: 15px;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.tl-year {
+  font-weight: 800;
+  font-size: 12.5px;
+  color: #fff;
+  background: var(--red);
+  padding: 3px 6px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.tl-event {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #3a2122;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #fbe4e4;
+  color: var(--red-deep);
+  border: 1px solid #f3c9c9;
+}
+
+.chip-site {
+  background: #fff5e0;
+  color: #8a5a08;
+  border-color: #f0dca6;
+}
+
+.history-empty {
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+/* ===== Nội dung chi tiết (main-content) ===== */
+.detail-band {
+  max-width: 1460px;
+  margin: 0 auto;
+  padding: 0 clamp(14px, 3vw, 40px) 40px;
+}
+
+.province-content {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: clamp(20px, 3vw, 40px);
+}
+
+.pc-head {
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+}
+
+.pc-eyebrow {
+  margin: 0 0 4px;
+  color: var(--red);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pc-head h2 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 40px);
+  color: var(--red-deep);
+}
+
+.pc-tagline {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: clamp(15px, 2vw, 18px);
+  font-style: italic;
+}
+
+/* Bộ ảnh */
+.pc-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.pc-photo {
+  margin: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.pc-photo img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.pc-photo figcaption {
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red-deep);
+  background: #fdf1f1;
+}
+
+/* Ảnh chưa có -> khối placeholder */
+.pc-photo.missing img {
+  display: none;
+}
+
+.pc-photo.missing {
+  position: relative;
+}
+
+.pc-photo.missing::before {
+  content: "🖼️ Ảnh minh họa";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  background:
+    linear-gradient(rgba(255, 250, 250, 0.85), rgba(255, 250, 250, 0.85)),
+    url("../img/trong-dong-2.png") center / 150% no-repeat,
+    #fbeeee;
+  color: var(--red);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* Khối nội dung */
+.pc-block {
+  margin-top: 26px;
+}
+
+.pc-block > h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 20px;
+  color: var(--red-deep);
+}
+
+.pc-block > h3::before {
+  content: "";
+  width: 22px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--gold);
+}
+
+.pc-block p {
+  margin: 0 0 12px;
+  line-height: 1.85;
+  font-size: 15.5px;
+  color: #34232a;
+}
+
+.pc-sections {
+  display: grid;
+  gap: 20px;
+}
+
+.pc-section {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--red);
+  border-radius: 0 10px 10px 0;
+  background: #fffafa;
+}
+
+.pc-section h3 {
+  margin: 0 0 8px;
+  font-size: 17px;
+  color: var(--red);
+}
+
+.pc-section p:last-child {
+  margin-bottom: 0;
+}
+
+.pc-influence {
+  padding: 18px 20px;
+  border-radius: 10px;
+  background: #fdf1f1;
+  border: 1px solid #f3c9c9;
+}
+
+.pc-influence p:last-child {
+  margin-bottom: 0;
+}
+
+.pc-empty {
+  padding: 24px;
+  border-radius: 10px;
+  background: #fffafa;
+  border: 1px dashed var(--line);
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@media (max-width: 760px) {
+  .pc-gallery {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1020px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .info-panel {
+    max-height: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .toolbar,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .map-shell {
+    min-height: 600px;
+  }
+
+  .map-canvas {
+    width: 500px;
+    height: 760px;
+  }
+
+  .province-pin {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

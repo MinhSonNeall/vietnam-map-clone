@@ -1,0 +1,379 @@
+/* ===== Trang Dòng thời gian — dùng chung theme từ landing.css ===== */
+
+.tl-home {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.tl-home:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.timeline-hint {
+  text-align: center;
+  color: #f3d6d6;
+  font-size: 13px;
+  margin: 0 0 18px;
+}
+
+/* ===== Thanh line thời gian ===== */
+.tl-line {
+  position: relative;
+}
+
+/* Bong bóng chú thích thời kỳ — nằm NGAY TRÊN khoảng của nó, mũi nhọn chĩa XUỐNG line */
+.tl-seg-name {
+  --lift: 16px;
+  position: absolute;
+  bottom: calc(100% + var(--lift));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  white-space: nowrap;
+  background: #fff;
+  color: #3a2122;
+  border: 2px solid var(--c);
+  border-radius: 9px;
+  font-family: Arial, "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1.4;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease;
+  z-index: 3;
+}
+
+.tl-seg-dot {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+/* cuống nối bong bóng xuống line (dài theo --lift) */
+.tl-seg-name::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: var(--lift);
+  background: var(--c);
+}
+
+/* mũi nhọn chĩa xuống khoảng (ở cuối cuống, sát line) */
+.tl-seg-name::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + var(--lift) - 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: var(--c);
+}
+
+/* So le: khoảng chẵn nâng bong bóng lên cao hơn để không đè khoảng cạnh bên */
+.tl-seg:nth-child(even) .tl-seg-name {
+  --lift: 58px;
+}
+
+/* Khoảng đang mở (hover/đang chọn): bong bóng hạ thấp sát line */
+.tl-seg.expanded .tl-seg-name {
+  --lift: 16px;
+}
+
+/* Khoảng đang được CHỌN: bong bóng tô đậm màu thời kỳ */
+.tl-seg.active .tl-seg-name {
+  background: var(--c);
+  color: #fff;
+}
+
+.tl-seg.active .tl-seg-name .tl-seg-dot {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75);
+}
+
+/* Khi một khoảng đang mở: chỉ hiện bong bóng của khoảng đó */
+.tl-bar:has(.tl-seg.expanded) .tl-seg:not(.expanded) .tl-seg-name {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Dải màu (line) */
+.tl-bar {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  min-height: 76px;
+  margin-top: 96px; /* chừa chỗ cho bong bóng chú thích (có so le cao/thấp) */
+  user-select: none;
+  touch-action: none;
+}
+
+.tl-seg {
+  position: relative;
+  flex-basis: 0;
+  min-width: 8px;
+  height: 18px;
+  border-radius: 6px;
+  background: var(--c);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: flex-grow 0.4s ease, height 0.35s ease, box-shadow 0.2s ease;
+}
+
+.tl-seg:hover {
+  filter: brightness(1.12);
+}
+
+/* Khoảng đang mở (hover preview hoặc đang chọn): giãn to (dài + dày) */
+.tl-seg.expanded {
+  height: 72px;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.5);
+}
+
+/* Các mốc nằm NGAY TRÊN line, chỉ hiện khi khoảng mở */
+.tl-seg-track {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease 0.12s;
+}
+
+.tl-seg.expanded .tl-seg-track {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tl-pt {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.tl-pt-year {
+  font-size: 11px;
+  font-weight: 800;
+  color: #fff;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.tl-pt:hover .tl-pt-year,
+.tl-pt.active .tl-pt-year {
+  opacity: 1;
+}
+
+.tl-pt-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.tl-pt:hover .tl-pt-dot {
+  transform: scale(1.25);
+}
+
+.tl-pt.active .tl-pt-dot {
+  transform: scale(1.45);
+  background: var(--gold);
+  border-color: #fff;
+  box-shadow: 0 0 0 4px rgba(242, 201, 76, 0.5);
+}
+
+/* ===== Nội dung chi tiết ===== */
+.tl-content {
+  margin-top: 28px;
+}
+
+.tl-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.tl-navbtn {
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--red);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.tl-navbtn:hover {
+  background: var(--red-deep);
+}
+
+.tl-counter {
+  color: #fff;
+  font-weight: 800;
+  min-width: 64px;
+  text-align: center;
+}
+
+.tl-slides-wrap {
+  overflow: hidden;
+  border-radius: 14px;
+  margin-top: 16px;
+}
+
+.tl-slides {
+  display: flex;
+}
+
+.tl-slide {
+  flex: 0 0 100%;
+  padding: 4px;
+}
+
+.tl-slide-card {
+  min-height: 200px;
+  padding: clamp(22px, 3vw, 42px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--red);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+.tl-era {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.tl-bigyear {
+  margin: 14px 0 4px;
+  font-size: clamp(30px, 5vw, 52px);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--red);
+}
+
+.tl-slide-card h2 {
+  margin: 0 0 14px;
+  font-size: clamp(20px, 3vw, 30px);
+  color: var(--red-deep);
+}
+
+.tl-slide-card p {
+  margin: 0;
+  font-size: clamp(15px, 2vw, 17px);
+  line-height: 1.8;
+  color: #34232a;
+}
+
+/* ===== Chú giải thời kỳ (mặc định ẩn; chỉ hiện trên màn hình nhỏ) =====
+   Trên mobile, bong bóng nổi quá chật nên thay bằng các "chip" chạm để chọn. */
+.tl-legend {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tl-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border: 2px solid var(--c);
+  border-radius: 999px;
+  background: #fff;
+  color: #3a2122;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.tl-legend-item.active {
+  background: var(--c);
+  color: #fff;
+}
+
+.tl-legend-dot {
+  flex: 0 0 auto;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--c);
+}
+
+/* ===== Màn hình nhỏ: dùng chú giải thay cho bong bóng nổi ===== */
+@media (max-width: 760px) {
+  .tl-seg-name {
+    display: none;
+  }
+
+  .tl-legend {
+    display: flex;
+  }
+
+  .tl-bar {
+    margin-top: 14px; /* không cần chừa chỗ cho bong bóng nữa */
+  }
+}
+
+@media (max-width: 520px) {
+  .tl-legend-item {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .tl-bar {
+    gap: 3px;
+  }
+
+  .tl-pt-year {
+    font-size: 10px;
+  }
+
+  .tl-nav {
+    gap: 10px;
+  }
+
+  .tl-navbtn {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+}
