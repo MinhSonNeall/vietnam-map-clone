@@ -2,10 +2,26 @@
 const eras = {
   "dung-nuoc": { label: "Thời dựng nước", short: "Dựng nước", color: "#d98324" },
   "bac-thuoc": { label: "Thời Bắc thuộc", short: "Bắc thuộc", color: "#9c6b3f" },
-  "doc-lap": { label: "Độc lập tự chủ", short: "Độc lập tự chủ", color: "#b01622" },
-  "phong-kien": { label: "Các triều đại phong kiến", short: "Phong kiến", color: "#7a0d12" },
+  // --- Các triều đại thời phong kiến (gộp dưới nhóm "Phong kiến") ---
+  "ngo-dinh-le": { label: "Ngô – Đinh – Tiền Lê", short: "Ngô–Đinh–Lê", color: "#cb6d2e" },
+  "ly": { label: "Nhà Lý", short: "Nhà Lý", color: "#c0392b" },
+  "tran": { label: "Nhà Trần", short: "Nhà Trần", color: "#7a0d12" },
+  "ho-minh": { label: "Nhà Hồ – thuộc Minh", short: "Hồ – Minh", color: "#8e5a2b" },
+  "le-so": { label: "Nhà Lê sơ", short: "Lê sơ", color: "#b8860b" },
+  "mac-trinh-nguyen": { label: "Mạc – Trịnh – Nguyễn (phân tranh)", short: "Mạc–Trịnh–Nguyễn", color: "#a93226" },
+  "tay-son": { label: "Nhà Tây Sơn", short: "Tây Sơn", color: "#e67e22" },
+  "nguyen": { label: "Nhà Nguyễn", short: "Nhà Nguyễn", color: "#6e2c00" },
+  // --- Hết nhóm phong kiến ---
   "phap-thuoc": { label: "Thời Pháp thuộc", short: "Pháp thuộc", color: "#4a5a6a" },
   "hien-dai": { label: "Thời hiện đại", short: "Hiện đại", color: "#d32f2f" }
+};
+
+// Nhóm "Phong kiến" gồm các triều đại (hiển thị 2 tầng: dải lớn trùm + triều đại con).
+const GROUP = {
+  key: "phong-kien",
+  short: "Phong kiến",
+  color: "#7a0d12",
+  eras: ["ngo-dinh-le", "ly", "tran", "ho-minh", "le-so", "mac-trinh-nguyen", "tay-son", "nguyen"]
 };
 
 // Mốc lấy từ data/, sắp theo năm (trường "y").
@@ -33,34 +49,45 @@ let activeEra = null;
 let activeIndex = -1;
 let hoverEra = null;
 let dragging = false;
+let groupHover = false;
+let hideTimer = null;
 
-// ===== Thanh line: mỗi khoảng có bong bóng chú thích (mũi nhọn chĩa xuống) + các point trên line =====
-bar.innerHTML = eraOrder
-  .map((k) => {
-    const g = eraGroups[k];
-    const n = g.length;
-    const points = g
-      .map((m, i) => {
-        const gi = milestones.indexOf(m);
-        const left = n === 1 ? 50 : 8 + (i / (n - 1)) * 84;
-        return `
-          <button class="tl-pt" data-i="${gi}" type="button" style="left:${left}%" title="${m.year} — ${m.title}">
-            <span class="tl-pt-year">${m.year}</span>
-            <span class="tl-pt-dot"></span>
-          </button>`;
-      })
-      .join("");
-    return `
-      <div class="tl-seg" data-era="${k}" style="flex-grow:${n};--c:${eras[k].color}">
-        <span class="tl-seg-name"><span class="tl-seg-dot"></span>${eras[k].short}</span>
-        <div class="tl-seg-track">${points}</div>
-      </div>`;
-  })
-  .join("");
+// ===== Thanh line 2 tầng: dải "Phong kiến" trùm lên các triều đại con =====
+function segHtml(k) {
+  const g = eraGroups[k];
+  const n = g.length;
+  const points = g
+    .map((m, i) => {
+      const gi = milestones.indexOf(m);
+      const left = n === 1 ? 50 : 8 + (i / (n - 1)) * 84;
+      return `<button class="tl-pt" data-i="${gi}" type="button" style="left:${left}%" title="${m.year} — ${m.title}"><span class="tl-pt-year">${m.year}</span><span class="tl-pt-dot"></span></button>`;
+    })
+    .join("");
+  return `<div class="tl-seg" data-era="${k}" style="flex-grow:${n};--c:${eras[k].color}"><span class="tl-seg-name"><span class="tl-seg-dot"></span>${eras[k].short}</span><div class="tl-seg-track">${points}</div></div>`;
+}
+
+// Vị trí dải phong kiến trong eraOrder (các triều đại nằm liền nhau)
+const dynPresent = GROUP.eras.filter((k) => eraOrder.indexOf(k) >= 0);
+const dynIdxs = eraOrder.map((k, i) => (dynPresent.indexOf(k) >= 0 ? i : -1)).filter((i) => i >= 0);
+const firstDyn = dynIdxs[0];
+const lastDyn = dynIdxs[dynIdxs.length - 1];
+const groupGrow = dynPresent.reduce((s, k) => s + baseGrow(k), 0);
+const groupHtml = `
+  <div class="tl-group" data-group="${GROUP.key}" style="flex-grow:${groupGrow};--c:${GROUP.color}">
+    <span class="tl-group-label"><span class="tl-seg-dot"></span>${GROUP.short}</span>
+    <div class="tl-group-bar"></div>
+    <div class="tl-group-inner">${dynPresent.map(segHtml).join("")}</div>
+  </div>`;
+
+bar.innerHTML =
+  eraOrder.slice(0, firstDyn).map(segHtml).join("") +
+  groupHtml +
+  eraOrder.slice(lastDyn + 1).map(segHtml).join("");
+
 const segs = [...bar.querySelectorAll(".tl-seg")];
+const groupEl = bar.querySelector(".tl-group");
 
-// Chú giải thời kỳ — hiển thị trên màn hình nhỏ (thay cho bong bóng nổi dễ bị đè).
-// Chạm vào một mục để chọn thời kỳ tương ứng.
+// Chú giải (hiện trên màn hình nhỏ thay bong bóng nổi). Chạm để chọn thời kỳ/triều đại.
 const legend = document.createElement("div");
 legend.className = "tl-legend";
 legend.innerHTML = eraOrder
@@ -79,16 +106,22 @@ legendItems.forEach((item) => {
 
 // ===== Nội dung trượt (tất cả các mốc) =====
 slides.innerHTML = milestones
-  .map((m) => {
+  .map((m, index) => {
     const color = (eras[m.era] || {}).color || "#b01622";
     const eraLabel = (eras[m.era] || {}).label || "";
+    const detail = m.detail || (window.TIMELINE_DETAIL || {})[m.y] || "";
+    const imgFile = (window.TIMELINE_IMG || {})[index + 1];
+    const img = imgFile
+      ? `<img class="tl-photo" loading="lazy" src="../img/thoi-ky/${imgFile}" alt="${m.title.replace(/"/g, "")}" />`
+      : "";
     return `
       <section class="tl-slide">
         <div class="tl-slide-card" style="border-top-color:${color}">
           <span class="tl-era" style="background:${color}">${eraLabel}</span>
           <div class="tl-bigyear" style="color:${color}">${m.year}</div>
           <h2>${m.title}</h2>
-          <p>${m.desc}</p>
+          ${img}
+          ${detail ? `<div class="tl-detail">${detail}</div>` : (m.desc ? `<p class="tl-lead">${m.desc}</p>` : "")}
         </div>
       </section>`;
   })
@@ -103,6 +136,13 @@ function applyExpansion() {
     s.classList.toggle("active", s.dataset.era === activeEra);
     s.style.flexGrow = isExp ? ACTIVE_GROW : baseGrow(s.dataset.era);
   });
+  if (groupEl) {
+    const dynActive = GROUP.eras.indexOf(activeEra) >= 0;
+    const open = groupHover || GROUP.eras.indexOf(hoverEra) >= 0 || dynActive;
+    groupEl.classList.toggle("open", open);
+    groupEl.classList.toggle("active", dynActive);
+    groupEl.style.flexGrow = open ? ACTIVE_GROW : groupGrow;
+  }
   legendItems.forEach((it) => it.classList.toggle("active", it.dataset.era === activeEra));
 }
 
@@ -114,9 +154,34 @@ function deselect() {
     s.classList.remove("active", "expanded");
     s.style.flexGrow = baseGrow(s.dataset.era);
   });
+  groupHover = false;
+  if (groupEl) {
+    groupEl.style.flexGrow = groupGrow;
+    groupEl.classList.remove("active", "expanded", "open");
+  }
   bar.querySelectorAll(".tl-pt.active").forEach((p) => p.classList.remove("active"));
   legendItems.forEach((it) => it.classList.remove("active"));
-  content.hidden = true;
+  hideContent();
+}
+
+// Hiện/ẩn khối nội dung có hiệu ứng mờ (mượt hơn bật/tắt đột ngột)
+function showContent() {
+  if (hideTimer) {
+    clearTimeout(hideTimer);
+    hideTimer = null;
+  }
+  content.hidden = false;
+  void content.offsetWidth; // ép reflow để transition chạy từ trạng thái ẩn
+  content.classList.add("show");
+}
+
+function hideContent() {
+  content.classList.remove("show");
+  if (hideTimer) clearTimeout(hideTimer);
+  hideTimer = setTimeout(() => {
+    content.hidden = true;
+    hideTimer = null;
+  }, 320);
 }
 
 // Hover để PREVIEW các mốc trong khoảng (không thay đổi lựa chọn)
@@ -132,6 +197,21 @@ segs.forEach((seg) => {
     applyExpansion();
   });
 });
+
+// Rê chuột vào thẻ dài "Phong kiến" -> bung ra các triều đại con; rời ra -> thu lại.
+if (groupEl) {
+  groupEl.addEventListener("mouseenter", () => {
+    if (dragging) return;
+    groupHover = true;
+    applyExpansion();
+  });
+  groupEl.addEventListener("mouseleave", () => {
+    if (dragging) return;
+    groupHover = false;
+    hoverEra = null;
+    applyExpansion();
+  });
+}
 
 function activeSeg() {
   return segs.find((s) => s.dataset.era === activeEra);
@@ -161,7 +241,7 @@ function selectMilestone(i) {
     p.classList.toggle("active", Number(p.dataset.i) === activeIndex);
   });
 
-  content.hidden = false;
+  showContent();
   slides.style.transition = "transform 0.45s ease";
   slides.style.transform = `translateX(${-activeIndex * 100}%)`;
   counter.textContent = `${activeIndex + 1} / ${milestones.length}`;
@@ -170,7 +250,14 @@ function selectMilestone(i) {
 // ===== Bấm + kéo trên line =====
 bar.addEventListener("pointerdown", (event) => {
   const seg = event.target.closest(".tl-seg");
-  if (!seg) return;
+  if (!seg) {
+    // Chạm/bấm vào thẻ dài "Phong kiến" -> bung ra các triều đại con (cho cả thiết bị cảm ứng)
+    if (event.target.closest(".tl-group")) {
+      groupHover = true;
+      applyExpansion();
+    }
+    return;
+  }
   const era = seg.dataset.era;
   const ptBtn = event.target.closest(".tl-pt");
 
