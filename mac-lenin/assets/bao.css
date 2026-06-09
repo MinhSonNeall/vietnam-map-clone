@@ -1,0 +1,504 @@
+/* ===== "Việt Nam Sử Ký" — Chuyên đề Lịch sử & Triết học Mác – Lênin =====
+   Phong cách BÁO GIẤY (tòa soạn): tờ báo nền giấy đặt trên nền đỏ-sẫm của site.
+   Dùng chung cho trang nhất (index.html) và các bài viết (bai/<slug>/index.html). */
+
+:root {
+  --paper: #f7f2e7;
+  --paper-edge: #e8dcc4;
+  --ink: #1c1714;
+  --ink-soft: #4a423b;
+  --muted: #6f655b;
+  --red: #b01622;
+  --red-deep: #7a0d12;
+  --gold: #b8860b;
+  --rule: #1c1714;
+  --line: #d8ccb4;
+  /* Times New Roman — hỗ trợ tiếng Việt đầy đủ trên Windows, tránh lỗi dấu. */
+  --display: "Times New Roman", Times, serif;
+  --serif: "Times New Roman", Times, serif;
+  
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: var(--serif);
+  background: linear-gradient(rgba(70, 8, 10, 0.86), rgba(40, 4, 6, 0.92)),
+    url("https://hypeddit-gates-prod.s3.amazonaws.com/nt1v81_coverartmanual")
+      center top / cover no-repeat fixed,
+    #2a0608;
+  background-size: cover;
+  padding: clamp(12px, 3vw, 40px) 12px;
+}
+
+/* ===== Tờ báo (sheet) ===== */
+.paper {
+  max-width: 1120px;
+  margin: 0 auto;
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  padding: clamp(18px, 3.5vw, 48px);
+}
+
+/* ===== Măng-sét (masthead) ===== */
+.masthead {
+  text-align: center;
+  border-bottom: 3px double var(--rule);
+  padding-bottom: 14px;
+}
+
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.masthead-top a {
+  color: var(--red-deep);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.masthead-top a:hover {
+  text-decoration: underline;
+}
+
+.masthead-brand {
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red-deep);
+  margin: 0 0 4px;
+}
+
+.masthead-title {
+  font-family: var(--display);
+  font-size: clamp(30px, 6vw, 58px);
+  line-height: 1.04;
+  margin: 4px 0 8px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.masthead-sub {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 auto;
+  max-width: 720px;
+  font-size: clamp(14px, 2vw, 17px);
+}
+
+/* ===== Nhãn chuyên mục / kicker ===== */
+.kicker {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--red-deep);
+  margin-bottom: 6px;
+}
+
+.section-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 34px 0 18px;
+}
+
+.section-bar span {
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red-deep);
+  white-space: nowrap;
+}
+
+.section-bar::before,
+.section-bar::after {
+  content: "";
+  height: 2px;
+  background: var(--rule);
+  flex: 1;
+}
+
+/* ===== Trang nhất: khu vực tin chính ===== */
+.lead-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 0;
+  margin-top: 22px;
+}
+
+.feature {
+  padding-right: 28px;
+  border-right: 1px solid var(--line);
+}
+
+.feature-img {
+  width: 100%;
+  height: clamp(220px, 38vw, 420px);
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.03);
+  border: 1px solid var(--paper-edge);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.feature-title {
+  font-family: var(--display);
+  font-size: clamp(26px, 4vw, 42px);
+  line-height: 1.1;
+  font-weight: 900;
+  margin: 6px 0 12px;
+}
+
+.feature-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.feature-title a:hover {
+  color: var(--red-deep);
+}
+
+.feature-sapo {
+  font-size: clamp(15px, 1.8vw, 18px);
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+}
+
+.sidebar {
+  padding-left: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.side-item:first-child {
+  padding-top: 0;
+}
+
+.side-item:last-child {
+  border-bottom: 0;
+}
+
+.side-title {
+  font-family: var(--display);
+  font-size: clamp(17px, 2vw, 21px);
+  line-height: 1.22;
+  font-weight: 700;
+  margin: 4px 0 6px;
+}
+
+.side-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.side-title a:hover {
+  color: var(--red-deep);
+}
+
+.side-sapo {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* ===== Lưới tin (các bài còn lại) — kiểu cột báo ===== */
+.news-grid {
+  column-count: 3;
+  column-gap: 28px;
+  column-rule: 1px solid var(--line);
+}
+
+.news-item {
+  break-inside: avoid;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.news-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  filter: grayscale(15%) contrast(1.03);
+  border: 1px solid var(--paper-edge);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.news-title {
+  font-family: var(--display);
+  font-size: 20px;
+  line-height: 1.22;
+  font-weight: 700;
+  margin: 4px 0 7px;
+}
+
+.news-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.news-title a:hover {
+  color: var(--red-deep);
+}
+
+.news-sapo {
+  font-size: 14px;
+  line-height: 1.62;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+
+.readmore {
+  font-family: var(--serif);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--red);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.readmore:hover {
+  color: var(--red-deep);
+}
+
+/* ===== Trang bài viết ===== */
+.article {
+  margin-top: 24px;
+}
+
+.article-header {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.article-title {
+  font-family: var(--display);
+  font-size: clamp(28px, 5vw, 50px);
+  line-height: 1.08;
+  font-weight: 900;
+  margin: 8px 0 14px;
+}
+
+.article-sapo {
+  font-size: clamp(16px, 2.2vw, 21px);
+  line-height: 1.6;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.article-meta {
+  font-family: var(--serif);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.article-hero {
+  width: 100%;
+  height: clamp(240px, 46vw, 500px);
+  object-fit: cover;
+  filter: grayscale(12%) contrast(1.03);
+  border: 1px solid var(--paper-edge);
+  margin: 0 0 6px;
+  display: block;
+}
+
+.article-hero-cap {
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--muted);
+  text-align: center;
+  margin: 0 0 24px;
+}
+
+/* Hộp nguyên lý triết học nổi bật */
+.principle-box {
+  margin: 0 auto 26px;
+  max-width: 860px;
+  padding: 18px 22px;
+  background: #fffdf6;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--gold);
+}
+
+.principle-box .kicker {
+  color: var(--red-deep);
+}
+
+.principle-box p {
+  margin: 4px 0 0;
+  font-size: clamp(17px, 2.4vw, 22px);
+  font-weight: 700;
+  line-height: 1.45;
+  color: var(--red-deep);
+}
+
+/* Thân bài — 2 cột kiểu báo */
+.article-body {
+  max-width: 980px;
+  margin: 0 auto;
+  column-count: 2;
+  column-gap: 36px;
+  text-align: justify;
+}
+
+.article-body h2 {
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 800;
+  margin: 4px 0 10px;
+  color: var(--red-deep);
+  break-after: avoid;
+}
+
+.article-body h2:not(:first-child) {
+  margin-top: 18px;
+}
+
+.article-body p {
+  margin: 0 0 14px;
+  font-size: 16.5px;
+  line-height: 1.78;
+  color: var(--ink);
+}
+
+/* Chữ cái đầu lớn (drop cap) cho đoạn mở đầu */
+.article-body > p:first-of-type::first-letter {
+  float: left;
+  font-size: 64px;
+  line-height: 0.78;
+  font-weight: 900;
+  padding: 6px 10px 0 0;
+  color: var(--red-deep);
+}
+
+.article-body strong {
+  color: var(--red-deep);
+}
+
+.pullquote {
+  break-inside: avoid;
+  margin: 6px 0 18px;
+  padding: 12px 0 12px 18px;
+  border-left: 4px solid var(--red);
+  font-size: clamp(18px, 2.4vw, 23px);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--red-deep);
+}
+
+.pullquote cite {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+/* Điều hướng cuối bài */
+.article-nav {
+  max-width: 980px;
+  margin: 30px auto 0;
+  padding-top: 18px;
+  border-top: 3px double var(--rule);
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--serif);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.article-nav a {
+  color: var(--red-deep);
+  text-decoration: none;
+  max-width: 46%;
+}
+
+.article-nav a:hover {
+  text-decoration: underline;
+}
+
+.article-nav .nav-home {
+  color: var(--ink);
+}
+
+/* ===== Footer ===== */
+.paper-footer {
+  margin-top: 30px;
+  padding-top: 14px;
+  border-top: 3px double var(--rule);
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-family: var(--serif);
+  letter-spacing: 0.5px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+  .lead-grid {
+    grid-template-columns: 1fr;
+  }
+  .feature {
+    padding-right: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 18px;
+    margin-bottom: 18px;
+  }
+  .sidebar {
+    padding-left: 0;
+  }
+  .news-grid {
+    column-count: 2;
+  }
+  .article-body {
+    column-count: 1;
+  }
+}
+
+@media (max-width: 560px) {
+  .news-grid {
+    column-count: 1;
+  }
+  .masthead-top {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
