@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký</title>
+
+    <!-- ===== SEO ===== -->
+    <meta
+      name="description"
+      content="Dòng thời gian các thời kì lịch sử Việt Nam — từ thời dựng nước, Bắc thuộc, các triều đại phong kiến, Pháp thuộc đến thời hiện đại — với những dấu mốc quan trọng nhất."
+    />
+    <meta
+      name="keywords"
+      content="dòng thời gian lịch sử Việt Nam, các thời kì, dựng nước, Bắc thuộc, phong kiến, Pháp thuộc, hiện đại, Việt Nam Sử Ký"
+    />
+    <meta name="author" content="Việt Nam Sử Ký — HCM202 Group 1" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#7a0d12" />
+    <link rel="canonical" href="https://fptlichsuviet.io.vn/lich-su-viet-nam/" />
+
+    <!-- ===== Open Graph (Facebook, Messenger, Zalo, Discord...) ===== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Việt Nam Sử Ký" />
+    <meta property="og:url" content="https://fptlichsuviet.io.vn/lich-su-viet-nam/" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:title" content="Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký" />
+    <meta
+      property="og:description"
+      content="Lần theo dòng thời gian lịch sử dân tộc qua 6 thời kì và những dấu mốc quan trọng nhất, từ dựng nước đến hiện đại."
+    />
+    <meta property="og:image" content="https://fptlichsuviet.io.vn/img/landing-page/bach-dang.jpg" />
+    <meta property="og:image:alt" content="Chiến thắng Bạch Đằng" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+
+    <!-- ===== Twitter Card ===== -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký" />
+    <meta
+      name="twitter:description"
+      content="Lần theo dòng thời gian lịch sử dân tộc qua 6 thời kì và những dấu mốc quan trọng nhất, từ dựng nước đến hiện đại."
+    />
+    <meta name="twitter:image" content="https://fptlichsuviet.io.vn/img/landing-page/bach-dang.jpg" />
+
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+
+    <link rel="stylesheet" href="../landing.css" />
+    <link rel="stylesheet" href="./timeline.css" />
+    <link rel="stylesheet" href="../loader.css" />
+  </head>
+  <body>
+    <!-- Vòng tròn tải trang (ẩn khi tải xong) -->
+    <div id="page-loader"><div class="pl-spinner" role="status" aria-label="Đang tải"></div></div>
+
+    <header class="lp-header">
+      <p class="eyebrow">Dòng thời gian</p>
+      <h1>Lịch sử Việt Nam qua các thời kì</h1>
+      <p class="lp-sub">
+        Những dấu mốc quan trọng nhất của lịch sử dân tộc, từ thời dựng nước đến thời hiện đại — kể lại
+        ngắn gọn trên một dòng thời gian.
+      </p>
+      <a class="tl-home" href="../index.html">← Về trang chủ</a>
+    </header>
+
+    <main class="lp-wrap">
+      <h2 class="lp-section-title">Dòng thời gian lịch sử</h2>
+
+      <p class="timeline-hint">Bấm vào một khoảng thời kỳ để phóng to khoảng đó; kéo dọc theo line hoặc bấm vào mốc để xem chi tiết</p>
+
+      <!-- Thanh line: mỗi khoảng có bong bóng chú thích phía trên + point nằm trên line -->
+      <div class="tl-line">
+        <div class="tl-bar" id="tlBar"></div>
+      </div>
+
+      <!-- Nội dung chi tiết của mốc đang chọn -->
+      <div class="tl-content" id="tlContent" hidden>
+        <div class="tl-nav">
+          <button class="tl-navbtn" id="tlPrev" type="button">‹ Trước</button>
+          <span class="tl-counter" id="tlCounter"></span>
+          <button class="tl-navbtn" id="tlNext" type="button">Sau ›</button>
+        </div>
+        <div class="tl-slides-wrap">
+          <div class="tl-slides" id="tlSlides"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="lp-footer">HCM202 / Group 1 &middot; © Việt Nam Sử Ký — Dòng thời gian lịch sử dân tộc.</footer>
+
+    <script src="../thoi-ky/data/dung-nuoc.js"></script>
+    <script src="../thoi-ky/data/bac-thuoc.js"></script>
+    <script src="../thoi-ky/data/doc-lap.js"></script>
+    <script src="../thoi-ky/data/phong-kien.js"></script>
+    <script src="../thoi-ky/data/phap-thuoc.js"></script>
+    <script src="../thoi-ky/data/hien-dai.js"></script>
+    <script src="../thoi-ky/data/details-extra.js"></script>
+    <script src="../thoi-ky/data/img-map.js"></script>
+    <script src="./timeline.js"></script>
+    <script src="../loader.js"></script>
+  </body>
+</html>
