@@ -1,0 +1,208 @@
+{
+  "checkedAt": "2026-10-06",
+  "note": "Source attribution does not imply an open license. Images remain credited to their source institutions; no AI generated historical images are used.",
+  "images": {
+    "tau-latouche": {
+      "file": "tau-latouche.jpg",
+      "imageUrl": "https://baotanghochiminh.vn/pic/Customer/images/13_2%20HCM.jpg",
+      "sourceUrl": "https://baotanghochiminh.vn/chu-tich-ho-chi-minh-va-dau-an-dac-biet-trong-nhung-nam-hoi.htm",
+      "caption": "Tàu Amiral Latouche Tréville, nơi Nguyễn Tất Thành làm phụ bếp khi ra đi năm 1911. Ảnh tư liệu.",
+      "credit": "Bảo tàng Hồ Chí Minh",
+      "height": 699,
+      "width": 1366,
+      "processing": "Resized to fit 1400 px; JPEG quality 86; no crop or historical-content alteration."
+    },
+    "parker": {
+      "file": "parker.gif",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/anh2X.gif",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14310/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941.html",
+      "caption": "Khách sạn Parker tại Boston, gắn với thời gian Nguyễn Tất Thành ở Mỹ (1912–1913). Ảnh địa điểm trong tư liệu bảo tàng.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "width": 279,
+      "height": 480
+    },
+    "carlton": {
+      "file": "carlton.gif",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/anh3X.gif",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14310/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941.html",
+      "caption": "Khách sạn Carlton ở Luân Đôn, nơi Nguyễn Tất Thành từng làm việc. Ảnh tư liệu về địa điểm.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "width": 313,
+      "height": 480
+    },
+    "yeu-sach": {
+      "file": "yeu-sach.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/123ngaysinh1.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14332/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941-phan-2-tu-mot-nguoi-yeu-nuoc-tro-thanh-nguoi-cong-san.html",
+      "caption": "Bản Yêu sách của nhân dân An Nam, tháng 6/1919. Ảnh chụp tài liệu.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 480,
+      "width": 374
+    },
+    "tours": {
+      "file": "tours.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/123ngaysinh2.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14332/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941-phan-2-tu-mot-nguoi-yeu-nuoc-tro-thanh-nguoi-cong-san.html",
+      "caption": "Nguyễn Ái Quốc phát biểu tại Đại hội Tours, tháng 12/1920. Ảnh tư liệu.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 352,
+      "width": 480
+    },
+    "compoint": {
+      "file": "compoint.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/123ngaysinh3.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14332/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941-phan-2-tu-mot-nguoi-yeu-nuoc-tro-thanh-nguoi-cong-san.html",
+      "caption": "Nhà số 9 ngõ Compoint, Paris, nơi Nguyễn Ái Quốc ở trong giai đoạn 1921–1923. Ảnh địa điểm.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 480,
+      "width": 320
+    },
+    "le-paria": {
+      "file": "le-paria.jpg",
+      "imageUrl": "https://baotanglichsu.vn/DataFiles/2022/04/News/Tieng Viet/5.4.2022/Nguyen Ai Quoc lam bao Le Paria/1.jpg",
+      "sourceUrl": "https://baotanglichsu.vn/VI/Articles/3097/73006/nguyen-ai-quoc-lam-bao-le-paria.html",
+      "caption": "Le Paria số 2, ngày 01/05/1922. Đây là số báo được bảo tàng giới thiệu, không phải số đầu tiên.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 1400,
+      "width": 1001,
+      "processing": "Resized to fit 1400 px; JPEG quality 86; no crop or historical-content alteration."
+    },
+    "phuong-dong": {
+      "file": "phuong-dong.jpg",
+      "imageUrl": "https://baotanghochiminh.vn/pic/Customer/images/221923baoxaydung_image001.jpg",
+      "sourceUrl": "https://baotanghochiminh.vn/chu-tich-ho-chi-minh-va-dau-an-dac-biet-trong-nhung-nam-hoi.htm",
+      "caption": "Giấy thông hành mang tên Chen Vang (Nguyễn Ái Quốc), cấp ngày 16/06/1923 để đến Nga. Ảnh chụp tài liệu.",
+      "credit": "Bảo tàng Hồ Chí Minh",
+      "height": 347,
+      "width": 500
+    },
+    "quoc-te-v": {
+      "file": "quoc-te-v.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/123ngaysinh4.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14332/ky-niem-123-nam-ngay-sinh-chu-tich-ho-chi-minh-19-5-1890-19-5-2013-hanh-trinh-theo-chan-bac-1911-1941-phan-2-tu-mot-nguoi-yeu-nuoc-tro-thanh-nguoi-cong-san.html",
+      "caption": "Nguyễn Ái Quốc cùng các đại biểu Đại hội V Quốc tế Cộng sản tại Moskva, năm 1924. Ảnh tư liệu.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 281,
+      "width": 480
+    },
+    "quang-chau": {
+      "file": "quang-chau.jpg",
+      "imageUrl": "https://baotanglichsu.vn/DataFiles/Uploaded/image/data%20Hung/thang%2012%20nam%202016/Cuon%20duong%20Kach%20menh%20Phan%201/1.jpg",
+      "sourceUrl": "https://baotanglichsu.vn/vi/Articles/1001/19692/cuon-djuong-kach-menh-cua-nguyen-ai-quoc-su-xuat-hien-va-hanh-trinh.html",
+      "caption": "Nhà số 13 đường Văn Minh (nay là số 248), Quảng Châu; nơi mở lớp huấn luyện năm 1925–1927. Ảnh di tích chụp về sau.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 480,
+      "width": 360
+    },
+    "thanh-nien": {
+      "file": "thanh-nien.jpg",
+      "imageUrl": "https://baotanglichsu.vn/DataFiles/Uploaded/image/data%20Hung/thang%2012%20nam%202016/Cuon%20duong%20Kach%20menh%20Phan%201/2.jpg",
+      "sourceUrl": "https://baotanglichsu.vn/vi/Articles/1001/19692/cuon-djuong-kach-menh-cua-nguyen-ai-quoc-su-xuat-hien-va-hanh-trinh.html",
+      "caption": "Báo Thanh Niên, số ngày 03/10/1926. Ảnh chụp một số báo trong thời kỳ hoạt động của Hội.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 480,
+      "width": 360
+    },
+    "ban-an": {
+      "file": "ban-an.jpg",
+      "imageUrl": "https://baotanglichsu.vn/DataFiles/2022/04/News/Tieng Viet/5.4.2022/Nguyen Ai Quoc lam bao Le Paria/2.jpg",
+      "sourceUrl": "https://baotanglichsu.vn/VI/Articles/3097/73006/nguyen-ai-quoc-lam-bao-le-paria.html",
+      "caption": "Bản án chế độ thực dân Pháp, xuất bản tại Paris năm 1925. Ảnh sách trong trưng bày bảo tàng.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 1417,
+      "width": 1063
+    },
+    "duong-kach-menh": {
+      "file": "duong-kach-menh.jpg",
+      "imageUrl": "https://baotanglichsu.vn/DataFiles/asset/upload/hien-vat-va-tu-lieu/1h.jpg",
+      "sourceUrl": "https://baotanglichsu.vn/vi/Articles/1001/28315/sach-djuong-kach-menh.html",
+      "caption": "Đường Kách mệnh, xuất bản năm 1927; bản in được lưu giữ tại Bảo tàng Lịch sử Quốc gia.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 291,
+      "width": 345
+    },
+    "udon": {
+      "file": "udon.jpg",
+      "imageUrl": "https://baotanghochiminh.vn/pic/AboutUs/images/khu%20luu%20niem%20bac%20ho_09052014_1.jpg",
+      "sourceUrl": "https://baotanghochiminh.vn/khu-tuong-niem-bac-ho-o-thai-lan.htm",
+      "caption": "Khu tưởng niệm Chủ tịch Hồ Chí Minh tại làng Noọng Ôn, Udon Thani. Ảnh công trình tưởng niệm chụp về sau.",
+      "credit": "Bảo tàng Hồ Chí Minh",
+      "height": 366,
+      "width": 650
+    },
+    "hong-kong": {
+      "file": "hong-kong.jpg",
+      "imageUrl": "https://baotanghochiminh.vn/pic/AboutUs/images/HK1.jpg",
+      "sourceUrl": "https://baotanghochiminh.vn/tham-noi-thanh-lap-dang-cong-san-viet-nam-nam-1930.htm",
+      "caption": "Khu vực Tống Vương Đài ở Cửu Long, gắn với hội nghị thành lập Đảng đầu năm 1930. Ảnh địa điểm do bảo tàng giới thiệu.",
+      "credit": "Bảo tàng Hồ Chí Minh",
+      "height": 899,
+      "width": 1366,
+      "processing": "Resized to fit 1400 px; JPEG quality 86; no crop or historical-content alteration."
+    },
+    "tong-van-so": {
+      "file": "tong-van-so.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/DATA%20HUONG/TIN%20NAM%202014/TIN%20THANG%206/Nguyen%20Ai%20Quoc%20bi%20bat%20o%20Hong%20Kong/1.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/2002/68166/6-6-1931-nguyen-ai-quoc-tong-van-so-bi-bat-o-hong-kong.html",
+      "caption": "Tống Văn Sơ (Nguyễn Ái Quốc), năm 1931. Ảnh tư liệu.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 480,
+      "width": 315
+    },
+    "pac-bo": {
+      "file": "pac-bo.jpg",
+      "imageUrl": "https://media.baocaobang.vn/upload/image/202602/medium/158299_chi_vi_thi_hong_thoa_chau_ngoai_cua_ba_hoang_thi_khin_lao_thanh_cach_mang_tai_ban_pac_bo_huong_dan_vien_khu_di_tich_quoc_gia_dac_biet_pac_bo_thuyet_mi_12072414.jpg",
+      "sourceUrl": "https://hochiminh.vn/tin-tuc/mua-xuan-pac-bo-nguoi-ve-thap-lua-long-dan-theo-cach-mang.html",
+      "caption": "Hướng dẫn viên tại cột mốc 108, Pác Bó. Ảnh di tích được đăng năm 2026, không phải ảnh chụp ngày Người về nước.",
+      "credit": "Báo Cao Bằng / Cổng thông tin Hồ Chí Minh",
+      "height": 756,
+      "width": 1024,
+      "processing": "Resized to fit 1400 px; JPEG quality 86; no crop or historical-content alteration."
+    },
+    "khuoi-nam": {
+      "file": "khuoi-nam.jpg",
+      "imageUrl": "https://baotanglichsuquocgia.vn/DataFiles/Uploaded/image/daihoi2.jpg",
+      "sourceUrl": "https://baotanglichsuquocgia.vn/vi/Articles/3097/14317/hoi-nghi-lan-thu-viii-ban-chap-hanh-trung-uong-djang-va-quyet-djinh-tien-hanh-cong-cuoc-giai-phong-dan-toc-tu-ngay-10-djen-ngay-19-5-1941.html",
+      "caption": "Lán Khuổi Nậm ở Pác Bó, địa điểm Hội nghị Trung ương VIII tháng 5/1941. Ảnh di tích chụp về sau.",
+      "credit": "Bảo tàng Lịch sử Quốc gia",
+      "height": 445,
+      "width": 480
+    },
+    "paris-carte": {
+      "file": "paris-carte.png",
+      "imageUrl": "https://dangcongsan.nhandan.vn/codang/images/img-hcm-4.png",
+      "sourceUrl": "https://dangcongsan.nhandan.vn/",
+      "caption": "Thẻ căn cước của Nguyễn Ái Quốc tại Paris, tháng 9/1919. Tài liệu minh họa thời kỳ hoạt động ở Pháp; không phải ảnh năm 1917.",
+      "credit": "Ảnh tư liệu / Báo Nhân Dân",
+      "width": 360,
+      "height": 273
+    },
+    "luan-cuong": {
+      "file": "luan-cuong.png",
+      "imageUrl": "https://dangcongsan.nhandan.vn/codang/images/img-hcm-6.png",
+      "sourceUrl": "https://dangcongsan.nhandan.vn/",
+      "caption": "Chân dung Nguyễn Ái Quốc năm 1920. Ảnh tư liệu, minh họa cho bước ngoặt tư tưởng năm 1920.",
+      "credit": "Bảo tàng Hồ Chí Minh / Báo Nhân Dân",
+      "width": 360,
+      "height": 273
+    },
+    "quoc-te-vii": {
+      "file": "quoc-te-vii.jpg",
+      "imageUrl": "https://dangcongsan.nhandan.vn/codang/images/img-hcm-24.jpg",
+      "sourceUrl": "https://dangcongsan.nhandan.vn/",
+      "caption": "Giấy chứng nhận số 154 cấp cho Lin (Nguyễn Ái Quốc) dự Đại hội VII Quốc tế Cộng sản năm 1935. Ảnh chụp tài liệu.",
+      "credit": "Ảnh tư liệu / Báo Nhân Dân",
+      "height": 212,
+      "width": 360
+    },
+    "duong-ve": {
+      "file": "duong-ve.jpg",
+      "imageUrl": "https://dangcongsan.nhandan.vn/codang/images/img-hcm-25.jpg",
+      "sourceUrl": "https://dangcongsan.nhandan.vn/",
+      "caption": "Thư ngày 08/06/1938 về việc cử đồng chí Lin trở về hoạt động tại Đông Dương hoặc tham gia kháng Nhật. Ảnh chụp tài liệu.",
+      "credit": "Ảnh tư liệu / Báo Nhân Dân",
+      "height": 273,
+      "width": 360
+    }
+  }
+}

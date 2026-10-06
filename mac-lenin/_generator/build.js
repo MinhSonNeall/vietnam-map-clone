@@ -31,7 +31,7 @@ function head({ title, desc, canonical, ogImage, ogAlt, rootRel }) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>${esc(title)}</title>
     <meta name="description" content="${strip(desc)}" />
-    <meta name="author" content="Việt Nam Sử Ký — MLN111 Group 4" />
+    <meta name="author" content="Việt Nam Sử Ký — HCM202 Group 1" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#7a0d12" />
     <link rel="canonical" href="${canonical}" />
@@ -101,7 +101,7 @@ function buildIndex() {
   <body>
     <div class="paper">
       <div class="masthead-top">
-        <span>Số chuyên đề · MLN111</span>
+        <span>Số chuyên đề · HCM202</span>
         <a href="${rootRel}../index.html">← Về trang chủ Việt Nam Sử Ký</a>
       </div>
       <header class="masthead">
@@ -130,7 +130,7 @@ function buildIndex() {
       <div class="news-grid">${gridHtml}
       </div>
 
-      <footer class="paper-footer">© Việt Nam Sử Ký — MLN111 / Group 4 · Chuyên đề Lịch sử &amp; Triết học Mác – Lênin</footer>
+      <footer class="paper-footer">© Việt Nam Sử Ký — HCM202 / Group 1 · Chuyên đề Lịch sử &amp; Triết học Mác – Lênin</footer>
     </div>
   </body>
 </html>
@@ -192,7 +192,7 @@ function buildArticle(a, idx) {
           <span class="kicker">${esc(a.era)} · ${esc(a.year)}</span>
           <h1 class="article-title">${esc(a.title)}</h1>
           <p class="article-sapo">${esc(a.sapo)}</p>
-          <p class="article-meta">Việt Nam Sử Ký — MLN111 / Group 4</p>
+          <p class="article-meta">Việt Nam Sử Ký — HCM202 / Group 1</p>
         </header>
 
         <img class="article-hero" src="${img(a.image)}" alt="${esc(a.imageAlt)}" />
@@ -214,7 +214,7 @@ function buildArticle(a, idx) {
         </nav>
       </article>
 
-      <footer class="paper-footer">© Việt Nam Sử Ký — MLN111 / Group 4 · Chuyên đề Lịch sử &amp; Triết học Mác – Lênin</footer>
+      <footer class="paper-footer">© Việt Nam Sử Ký — HCM202 / Group 1 · Chuyên đề Lịch sử &amp; Triết học Mác – Lênin</footer>
     </div>
   </body>
 </html>

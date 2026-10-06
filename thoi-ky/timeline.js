@@ -1,301 +1,165 @@
-// Các thời kỳ lịch sử (tô màu + chia khoảng). Thứ tự = thứ tự thời gian.
-const eras = {
-  "dung-nuoc": { label: "Thời dựng nước", short: "Dựng nước", color: "#d98324" },
-  "bac-thuoc": { label: "Thời Bắc thuộc", short: "Bắc thuộc", color: "#9c6b3f" },
-  // --- Các triều đại thời phong kiến (gộp dưới nhóm "Phong kiến") ---
-  "ngo-dinh-le": { label: "Ngô – Đinh – Tiền Lê", short: "Ngô–Đinh–Lê", color: "#cb6d2e" },
-  "ly": { label: "Nhà Lý", short: "Nhà Lý", color: "#c0392b" },
-  "tran": { label: "Nhà Trần", short: "Nhà Trần", color: "#7a0d12" },
-  "ho-minh": { label: "Nhà Hồ – thuộc Minh", short: "Hồ – Minh", color: "#8e5a2b" },
-  "le-so": { label: "Nhà Lê sơ", short: "Lê sơ", color: "#b8860b" },
-  "mac-trinh-nguyen": { label: "Mạc – Trịnh – Nguyễn (phân tranh)", short: "Mạc–Trịnh–Nguyễn", color: "#a93226" },
-  "tay-son": { label: "Nhà Tây Sơn", short: "Tây Sơn", color: "#e67e22" },
-  "nguyen": { label: "Nhà Nguyễn", short: "Nhà Nguyễn", color: "#6e2c00" },
-  // --- Hết nhóm phong kiến ---
-  "phap-thuoc": { label: "Thời Pháp thuộc", short: "Pháp thuộc", color: "#4a5a6a" },
-  "hien-dai": { label: "Thời hiện đại", short: "Hiện đại", color: "#d32f2f" }
-};
+(() => {
+  "use strict";
+  const { chapters, milestones, sources } = window.HCM_JOURNEY;
+  const images = window.HCM_JOURNEY_IMAGES;
+  const filters = document.getElementById("chapterFilters");
+  const list = document.getElementById("milestoneList");
+  const detail = document.getElementById("milestoneDetail");
+  const counter = document.getElementById("tlCounter");
+  const previous = document.getElementById("tlPrev");
+  const next = document.getElementById("tlNext");
+  const all = document.getElementById("showAll");
+  let chapter = null;
+  let selected = milestones[0].id;
+  const escape = (value) =>
+    String(value).replace(
+      /[&<>"']/g,
+      (character) =>
+        ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        })[character],
+    );
+  const visibleMilestones = () =>
+    milestones.filter((m) => !chapter || m.chapter === chapter);
+  const sourceLink = (id) =>
+    `<a href="${escape(sources[id].url)}" target="_blank" rel="noopener noreferrer">${escape(sources[id].publisher)} — ${escape(sources[id].title)} ↗</a>`;
 
-// Nhóm "Phong kiến" gồm các triều đại (hiển thị 2 tầng: dải lớn trùm + triều đại con).
-const GROUP = {
-  key: "phong-kien",
-  short: "Phong kiến",
-  color: "#7a0d12",
-  eras: ["ngo-dinh-le", "ly", "tran", "ho-minh", "le-so", "mac-trinh-nguyen", "tay-son", "nguyen"]
-};
-
-// Mốc lấy từ data/, sắp theo năm (trường "y").
-const milestones = (window.TIMELINE || []).slice().sort((a, b) => a.y - b.y);
-
-// Gom mốc theo thời kỳ (theo thứ tự eras).
-const eraOrder = Object.keys(eras).filter((k) => milestones.some((m) => m.era === k));
-const eraGroups = {};
-eraOrder.forEach((k) => {
-  eraGroups[k] = milestones.filter((m) => m.era === k);
-});
-
-const bar = document.querySelector("#tlBar");
-const content = document.querySelector("#tlContent");
-const slides = document.querySelector("#tlSlides");
-const counter = document.querySelector("#tlCounter");
-const prevBtn = document.querySelector("#tlPrev");
-const nextBtn = document.querySelector("#tlNext");
-
-const total = milestones.length;
-const ACTIVE_GROW = Math.round(total * 1.6);
-const baseGrow = (k) => eraGroups[k].length;
-
-let activeEra = null;
-let activeIndex = -1;
-let hoverEra = null;
-let dragging = false;
-let groupHover = false;
-let hideTimer = null;
-
-// ===== Thanh line 2 tầng: dải "Phong kiến" trùm lên các triều đại con =====
-function segHtml(k) {
-  const g = eraGroups[k];
-  const n = g.length;
-  const points = g
-    .map((m, i) => {
-      const gi = milestones.indexOf(m);
-      const left = n === 1 ? 50 : 8 + (i / (n - 1)) * 84;
-      return `<button class="tl-pt" data-i="${gi}" type="button" style="left:${left}%" title="${m.year} — ${m.title}"><span class="tl-pt-year">${m.year}</span><span class="tl-pt-dot"></span></button>`;
-    })
+  filters.innerHTML = chapters
+    .map(
+      (c, i) =>
+        `<button type="button" class="chapter-button" data-chapter="${c.id}" aria-pressed="false" title="${escape(c.description)}"><span class="chapter-years">0${i + 1} / ${c.years}</span><span class="chapter-title">${c.title}</span></button>`,
+    )
     .join("");
-  return `<div class="tl-seg" data-era="${k}" style="flex-grow:${n};--c:${eras[k].color}"><span class="tl-seg-name"><span class="tl-seg-dot"></span>${eras[k].short}</span><div class="tl-seg-track">${points}</div></div>`;
-}
+  document.getElementById("sourceList").innerHTML = Object.entries(sources)
+    .map(
+      ([id, s]) =>
+        `<li>${sourceLink(id)}<span>${escape(new URL(s.url).hostname)}</span></li>`,
+    )
+    .join("");
 
-// Vị trí dải phong kiến trong eraOrder (các triều đại nằm liền nhau)
-const dynPresent = GROUP.eras.filter((k) => eraOrder.indexOf(k) >= 0);
-const dynIdxs = eraOrder.map((k, i) => (dynPresent.indexOf(k) >= 0 ? i : -1)).filter((i) => i >= 0);
-const firstDyn = dynIdxs[0];
-const lastDyn = dynIdxs[dynIdxs.length - 1];
-const groupGrow = dynPresent.reduce((s, k) => s + baseGrow(k), 0);
-const groupHtml = `
-  <div class="tl-group" data-group="${GROUP.key}" style="flex-grow:${groupGrow};--c:${GROUP.color}">
-    <span class="tl-group-label"><span class="tl-seg-dot"></span>${GROUP.short}</span>
-    <div class="tl-group-bar"></div>
-    <div class="tl-group-inner">${dynPresent.map(segHtml).join("")}</div>
-  </div>`;
-
-bar.innerHTML =
-  eraOrder.slice(0, firstDyn).map(segHtml).join("") +
-  groupHtml +
-  eraOrder.slice(lastDyn + 1).map(segHtml).join("");
-
-const segs = [...bar.querySelectorAll(".tl-seg")];
-const groupEl = bar.querySelector(".tl-group");
-
-// Chú giải (hiện trên màn hình nhỏ thay bong bóng nổi). Chạm để chọn thời kỳ/triều đại.
-const legend = document.createElement("div");
-legend.className = "tl-legend";
-legend.innerHTML = eraOrder
-  .map(
-    (k) =>
-      `<button class="tl-legend-item" type="button" data-era="${k}" style="--c:${eras[k].color}"><span class="tl-legend-dot"></span>${eras[k].short}</button>`
-  )
-  .join("");
-bar.parentElement.insertBefore(legend, bar);
-const legendItems = [...legend.querySelectorAll(".tl-legend-item")];
-legendItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    selectMilestone(milestones.findIndex((m) => m.era === item.dataset.era));
-  });
-});
-
-// ===== Nội dung trượt (tất cả các mốc) =====
-slides.innerHTML = milestones
-  .map((m, index) => {
-    const color = (eras[m.era] || {}).color || "#b01622";
-    const eraLabel = (eras[m.era] || {}).label || "";
-    const detail = m.detail || (window.TIMELINE_DETAIL || {})[m.y] || "";
-    const imgFile = (window.TIMELINE_IMG || {})[index + 1];
-    const img = imgFile
-      ? `<img class="tl-photo" loading="lazy" src="../img/thoi-ky/${imgFile}" alt="${m.title.replace(/"/g, "")}" />`
-      : "";
-    return `
-      <section class="tl-slide">
-        <div class="tl-slide-card" style="border-top-color:${color}">
-          <span class="tl-era" style="background:${color}">${eraLabel}</span>
-          <div class="tl-bigyear" style="color:${color}">${m.year}</div>
-          <h2>${m.title}</h2>
-          ${img}
-          ${detail ? `<div class="tl-detail">${detail}</div>` : (m.desc ? `<p class="tl-lead">${m.desc}</p>` : "")}
-        </div>
-      </section>`;
-  })
-  .join("");
-
-// Khoảng được "mở" = đang hover (preview) hoặc đang chọn (pinned)
-function applyExpansion() {
-  const expanded = hoverEra || activeEra;
-  segs.forEach((s) => {
-    const isExp = s.dataset.era === expanded;
-    s.classList.toggle("expanded", isExp);
-    s.classList.toggle("active", s.dataset.era === activeEra);
-    s.style.flexGrow = isExp ? ACTIVE_GROW : baseGrow(s.dataset.era);
-  });
-  if (groupEl) {
-    const dynActive = GROUP.eras.indexOf(activeEra) >= 0;
-    const open = groupHover || GROUP.eras.indexOf(hoverEra) >= 0 || dynActive;
-    groupEl.classList.toggle("open", open);
-    groupEl.classList.toggle("active", dynActive);
-    groupEl.style.flexGrow = open ? ACTIVE_GROW : groupGrow;
+  function renderList() {
+    list.innerHTML = visibleMilestones()
+      .map(
+        (m) =>
+          `<li><button class="milestone-button" type="button" data-milestone="${m.id}" aria-controls="milestoneDetail"${m.id === selected ? ' aria-current="step"' : ""}><span>${escape(m.date)}</span>${escape(m.title)}</button></li>`,
+      )
+      .join("");
+    filters
+      .querySelectorAll("button")
+      .forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.dataset.chapter === chapter)),
+      );
+    all.setAttribute("aria-pressed", String(chapter === null));
+    document.getElementById("listHeading").textContent = chapter
+      ? chapters.find((c) => c.id === chapter).title
+      : "Tất cả dấu mốc";
   }
-  legendItems.forEach((it) => it.classList.toggle("active", it.dataset.era === activeEra));
-}
 
-function deselect() {
-  activeEra = null;
-  activeIndex = -1;
-  hoverEra = null;
-  segs.forEach((s) => {
-    s.classList.remove("active", "expanded");
-    s.style.flexGrow = baseGrow(s.dataset.era);
-  });
-  groupHover = false;
-  if (groupEl) {
-    groupEl.style.flexGrow = groupGrow;
-    groupEl.classList.remove("active", "expanded", "open");
-  }
-  bar.querySelectorAll(".tl-pt.active").forEach((p) => p.classList.remove("active"));
-  legendItems.forEach((it) => it.classList.remove("active"));
-  hideContent();
-}
-
-// Hiện/ẩn khối nội dung có hiệu ứng mờ (mượt hơn bật/tắt đột ngột)
-function showContent() {
-  if (hideTimer) {
-    clearTimeout(hideTimer);
-    hideTimer = null;
-  }
-  content.hidden = false;
-  void content.offsetWidth; // ép reflow để transition chạy từ trạng thái ẩn
-  content.classList.add("show");
-}
-
-function hideContent() {
-  content.classList.remove("show");
-  if (hideTimer) clearTimeout(hideTimer);
-  hideTimer = setTimeout(() => {
-    content.hidden = true;
-    hideTimer = null;
-  }, 320);
-}
-
-// Hover để PREVIEW các mốc trong khoảng (không thay đổi lựa chọn)
-segs.forEach((seg) => {
-  seg.addEventListener("mouseenter", () => {
-    if (dragging) return;
-    hoverEra = seg.dataset.era;
-    applyExpansion();
-  });
-  seg.addEventListener("mouseleave", () => {
-    if (dragging) return;
-    hoverEra = null;
-    applyExpansion();
-  });
-});
-
-// Rê chuột vào thẻ dài "Phong kiến" -> bung ra các triều đại con; rời ra -> thu lại.
-if (groupEl) {
-  groupEl.addEventListener("mouseenter", () => {
-    if (dragging) return;
-    groupHover = true;
-    applyExpansion();
-  });
-  groupEl.addEventListener("mouseleave", () => {
-    if (dragging) return;
-    groupHover = false;
-    hoverEra = null;
-    applyExpansion();
-  });
-}
-
-function activeSeg() {
-  return segs.find((s) => s.dataset.era === activeEra);
-}
-
-// Tìm mốc gần nhất theo vị trí chuột trên khoảng đang mở (để kéo)
-function indexFromX(clientX) {
-  const seg = activeSeg();
-  if (!seg) return activeIndex;
-  const g = eraGroups[activeEra];
-  const n = g.length;
-  if (n < 2) return milestones.indexOf(g[0]);
-  const rect = seg.getBoundingClientRect();
-  let ratio = (clientX - rect.left) / rect.width;
-  ratio = Math.min(1, Math.max(0, ratio));
-  let local = (ratio - 0.08) / 0.84;
-  local = Math.min(1, Math.max(0, local));
-  return milestones.indexOf(g[Math.round(local * (n - 1))]);
-}
-
-function selectMilestone(i) {
-  activeIndex = Math.max(0, Math.min(milestones.length - 1, i));
-  activeEra = milestones[activeIndex].era;
-  applyExpansion();
-
-  bar.querySelectorAll(".tl-pt").forEach((p) => {
-    p.classList.toggle("active", Number(p.dataset.i) === activeIndex);
-  });
-
-  showContent();
-  slides.style.transition = "transform 0.45s ease";
-  slides.style.transform = `translateX(${-activeIndex * 100}%)`;
-  counter.textContent = `${activeIndex + 1} / ${milestones.length}`;
-}
-
-// ===== Bấm + kéo trên line =====
-bar.addEventListener("pointerdown", (event) => {
-  const seg = event.target.closest(".tl-seg");
-  if (!seg) {
-    // Chạm/bấm vào thẻ dài "Phong kiến" -> bung ra các triều đại con (cho cả thiết bị cảm ứng)
-    if (event.target.closest(".tl-group")) {
-      groupHover = true;
-      applyExpansion();
+  function select(id, { updateHistory = true } = {}) {
+    const milestone = milestones.find((m) => m.id === id);
+    if (!milestone) return;
+    selected = id;
+    if (chapter && milestone.chapter !== chapter) {
+      chapter = null;
+      renderList();
     }
-    return;
+    list.querySelectorAll("button").forEach((b) => {
+      if (b.dataset.milestone === id) b.setAttribute("aria-current", "step");
+      else b.removeAttribute("aria-current");
+    });
+    const visible = visibleMilestones();
+    const position = visible.findIndex((m) => m.id === id);
+    previous.disabled = position === 0;
+    next.disabled = position === visible.length - 1;
+    counter.textContent = `Mốc ${position + 1} / ${visible.length}${chapter ? " trong chặng" : ""}`;
+    const photo = images[milestone.image];
+    const chapterInfo = chapters.find((c) => c.id === milestone.chapter);
+    detail.innerHTML = `<header class="detail-header"><div class="detail-meta"><span class="detail-date">${escape(milestone.date)}</span><span aria-hidden="true">·</span><span>${escape(chapterInfo.title)}</span></div><h2 class="detail-title" id="detailTitle">${escape(milestone.title)}</h2><p class="detail-location">${escape(milestone.location)}</p></header>
+      <figure class="detail-image-wrap"><a class="photo-link" href="../img/hanh-trinh-hcm/${escape(photo.file)}" target="_blank" rel="noopener" aria-label="Mở ảnh: ${escape(photo.caption)}"><img class="detail-image" src="../img/hanh-trinh-hcm/${escape(photo.file)}" alt="${escape(photo.caption)}" width="${photo.width}" height="${photo.height}" decoding="async" /></a><p class="image-error" hidden>Ảnh chưa tải được. Bạn có thể xem tại nguồn ảnh bên dưới.</p><figcaption>${escape(photo.caption)}<a class="image-credit" href="${escape(photo.sourceUrl)}" target="_blank" rel="noopener noreferrer">${escape(photo.credit)} · Xem nguồn ảnh ↗</a></figcaption></figure>
+      <div class="detail-body">${milestone.text.map((p) => `<p>${escape(p)}</p>`).join("")}<aside class="meaning"><strong>Ý nghĩa của dấu mốc</strong>${escape(milestone.meaning)}</aside><div class="milestone-sources"><strong>Tư liệu đối chiếu</strong>${milestone.sources.map(sourceLink).join("")}</div></div>`;
+    detail.querySelector("img").addEventListener(
+      "error",
+      (event) => {
+        event.target.hidden = true;
+        detail.querySelector(".image-error").hidden = false;
+      },
+      { once: true },
+    );
+    if (updateHistory && location.hash !== `#${id}`)
+      history.pushState(null, "", `#${id}`);
+    const activeButton = list.querySelector('[aria-current="step"]');
+    if (activeButton) {
+      const nav = list.parentElement;
+      const top =
+        activeButton.getBoundingClientRect().top -
+        nav.getBoundingClientRect().top +
+        nav.scrollTop;
+      if (
+        top < nav.scrollTop ||
+        top + activeButton.offsetHeight > nav.scrollTop + nav.clientHeight
+      )
+        nav.scrollTop = Math.max(0, top - nav.clientHeight / 2);
+    }
   }
-  const era = seg.dataset.era;
-  const ptBtn = event.target.closest(".tl-pt");
-
-  dragging = true;
-  bar.setPointerCapture(event.pointerId);
-
-  if (ptBtn) {
-    selectMilestone(Number(ptBtn.dataset.i));
-  } else if (era !== activeEra) {
-    selectMilestone(milestones.findIndex((m) => m.era === era));
-  } else {
-    selectMilestone(indexFromX(event.clientX));
+  filters.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-chapter]");
+    if (!button) return;
+    chapter = button.dataset.chapter;
+    if (milestones.find((m) => m.id === selected).chapter !== chapter)
+      selected = visibleMilestones()[0].id;
+    renderList();
+    select(selected);
+  });
+  all.addEventListener("click", () => {
+    chapter = null;
+    renderList();
+    select(selected);
+  });
+  list.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-milestone]");
+    if (button) select(button.dataset.milestone);
+  });
+  function step(direction) {
+    const visible = visibleMilestones();
+    const target =
+      visible[visible.findIndex((m) => m.id === selected) + direction];
+    if (target) select(target.id);
   }
-});
-
-bar.addEventListener("pointermove", (event) => {
-  if (!dragging || !activeEra) return;
-  selectMilestone(indexFromX(event.clientX));
-});
-
-bar.addEventListener("pointerup", () => {
-  dragging = false;
-});
-bar.addEventListener("pointercancel", () => {
-  dragging = false;
-});
-
-prevBtn.addEventListener("click", () => selectMilestone((activeIndex < 0 ? 0 : activeIndex) - 1));
-nextBtn.addEventListener("click", () => selectMilestone((activeIndex < 0 ? -1 : activeIndex) + 1));
-
-document.addEventListener("keydown", (event) => {
-  if (content.hidden) return;
-  if (event.key === "ArrowLeft") selectMilestone(activeIndex - 1);
-  else if (event.key === "ArrowRight") selectMilestone(activeIndex + 1);
-});
-
-// Bấm ra ngoài line & nội dung -> bỏ chọn (về mặc định)
-document.addEventListener("click", (event) => {
-  if (event.target.closest(".tl-line") || event.target.closest(".tl-content")) return;
-  if (activeEra !== null || !content.hidden) deselect();
-});
+  previous.addEventListener("click", () => step(-1));
+  next.addEventListener("click", () => step(1));
+  list.addEventListener("keydown", (event) => {
+    if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const visible = visibleMilestones();
+    const focusedIndex = visible.findIndex(
+      (m) => m.id === event.target.dataset.milestone,
+    );
+    const index =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? visible.length - 1
+          : Math.max(
+              0,
+              Math.min(
+                visible.length - 1,
+                focusedIndex + (event.key === "ArrowDown" ? 1 : -1),
+              ),
+            );
+    select(visible[index].id);
+    list.querySelector('[aria-current="step"]').focus({ preventScroll: true });
+  });
+  function readHash() {
+    const id = location.hash.slice(1);
+    if (milestones.some((m) => m.id === id))
+      select(id, { updateHistory: false });
+  }
+  window.addEventListener("hashchange", readHash);
+  renderList();
+  select(selected, { updateHistory: false });
+  readHash();
+})();

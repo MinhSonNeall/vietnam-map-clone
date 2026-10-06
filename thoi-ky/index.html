@@ -3,100 +3,229 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký</title>
-
-    <!-- ===== SEO ===== -->
+    <title>
+      Hành trình tìm đường cứu nước của Chủ tịch Hồ Chí Minh (1911–1941)
+    </title>
     <meta
       name="description"
-      content="Dòng thời gian các thời kì lịch sử Việt Nam — từ thời dựng nước, Bắc thuộc, các triều đại phong kiến, Pháp thuộc đến thời hiện đại — với những dấu mốc quan trọng nhất."
+      content="Theo dấu hành trình ra đi tìm đường cứu nước của Chủ tịch Hồ Chí Minh qua 21 mốc từ Bến Nhà Rồng năm 1911 đến Cao Bằng năm 1941, với hình ảnh và nguồn tư liệu chính thức."
     />
-    <meta
-      name="keywords"
-      content="dòng thời gian lịch sử Việt Nam, các thời kì, dựng nước, Bắc thuộc, phong kiến, Pháp thuộc, hiện đại, Việt Nam Sử Ký"
-    />
-    <meta name="author" content="Việt Nam Sử Ký — MLN111 Group 4" />
-    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#7a0d12" />
+    <meta name="author" content="Việt Nam Sử Ký — HCM202 Group 1" />
     <link rel="canonical" href="https://fptlichsuviet.io.vn/thoi-ky/" />
-
-    <!-- ===== Open Graph (Facebook, Messenger, Zalo, Discord...) ===== -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Việt Nam Sử Ký" />
-    <meta property="og:url" content="https://fptlichsuviet.io.vn/thoi-ky/" />
     <meta property="og:locale" content="vi_VN" />
-    <meta property="og:title" content="Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký" />
+    <meta property="og:url" content="https://fptlichsuviet.io.vn/thoi-ky/" />
+    <meta
+      property="og:title"
+      content="Hồ Chí Minh — Hành trình tìm đường cứu nước, 1911–1941"
+    />
     <meta
       property="og:description"
-      content="Lần theo dòng thời gian lịch sử dân tộc qua 6 thời kì và những dấu mốc quan trọng nhất, từ dựng nước đến hiện đại."
+      content="21 dấu mốc, bốn chặng đường và những tư liệu về hành trình từ Bến Nhà Rồng đến Pác Bó."
     />
-    <meta property="og:image" content="https://fptlichsuviet.io.vn/img/landing-page/bach-dang.jpg" />
-    <meta property="og:image:alt" content="Chiến thắng Bạch Đằng" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="800" />
-
-    <!-- ===== Twitter Card ===== -->
+    <meta
+      property="og:image"
+      content="https://fptlichsuviet.io.vn/img/hanh-trinh-hcm/tau-latouche.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Tàu Amiral Latouche Tréville — ảnh tư liệu"
+    />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Dòng thời gian lịch sử Việt Nam — Việt Nam Sử Ký" />
+    <meta
+      name="twitter:title"
+      content="Hồ Chí Minh — Hành trình tìm đường cứu nước, 1911–1941"
+    />
     <meta
       name="twitter:description"
-      content="Lần theo dòng thời gian lịch sử dân tộc qua 6 thời kì và những dấu mốc quan trọng nhất, từ dựng nước đến hiện đại."
+      content="Từ Bến Nhà Rồng đến Pác Bó: mốc thời gian, hình ảnh và nguồn tư liệu chính thức."
     />
-    <meta name="twitter:image" content="https://fptlichsuviet.io.vn/img/landing-page/bach-dang.jpg" />
-
+    <meta
+      name="twitter:image"
+      content="https://fptlichsuviet.io.vn/img/hanh-trinh-hcm/tau-latouche.jpg"
+    />
     <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
-
-    <link rel="stylesheet" href="../landing.css" />
-    <link rel="stylesheet" href="./timeline.css" />
-    <link rel="stylesheet" href="../loader.css" />
+    <link rel="stylesheet" href="./timeline.css?v=20261006" />
+    <script src="./data/journey.js?v=20261006" defer></script>
+    <script src="./data/journey-images.js?v=20261006" defer></script>
+    <script src="./timeline.js?v=20261006" defer></script>
   </head>
   <body>
-    <!-- Vòng tròn tải trang (ẩn khi tải xong) -->
-    <div id="page-loader"><div class="pl-spinner" role="status" aria-label="Đang tải"></div></div>
-
-    <header class="lp-header">
-      <p class="eyebrow">Dòng thời gian</p>
-      <h1>Lịch sử Việt Nam qua các thời kì</h1>
-      <p class="lp-sub">
-        Những dấu mốc quan trọng nhất của lịch sử dân tộc, từ thời dựng nước đến thời hiện đại — kể lại
-        ngắn gọn trên một dòng thời gian.
-      </p>
-      <a class="tl-home" href="../index.html">← Về trang chủ</a>
+    <a class="skip-link" href="#hanh-trinh">Đến dòng thời gian</a>
+    <header class="journey-hero">
+      <nav class="topbar" aria-label="Điều hướng chính">
+        <a class="brand" href="../index.html"
+          >VIỆT NAM SỬ KÝ<span>Những câu chuyện làm nên lịch sử</span></a
+        ><a class="home-link" href="../index.html">← Trang chủ</a>
+      </nav>
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Hồ Chí Minh · 1911 — 1941</p>
+          <h1>Hành trình ra đi<br />tìm đường <em>cứu nước</em></h1>
+          <p class="hero-intro">
+            Theo dấu Chủ tịch Hồ Chí Minh, từ người thanh niên Nguyễn Tất Thành
+            rời bến Nhà Rồng đến ngày Nguyễn Ái Quốc trở về Tổ quốc.
+          </p>
+          <a class="primary-link" href="#hanh-trinh"
+            >Khám phá hành trình <span aria-hidden="true">↓</span></a
+          >
+        </div>
+        <figure class="hero-photo">
+          <img
+            src="../img/hanh-trinh-hcm/tau-latouche.jpg"
+            width="700"
+            height="450"
+            alt="Ảnh tư liệu tàu Amiral Latouche Tréville"
+            fetchpriority="high"
+          />
+          <figcaption>
+            Con tàu khởi đầu hành trình ·
+            <a
+              href="https://baotanghochiminh.vn/chu-tich-ho-chi-minh-va-dau-an-dac-biet-trong-nhung-nam-hoi.htm"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Tư liệu Bảo tàng Hồ Chí Minh ↗</a
+            >
+          </figcaption>
+        </figure>
+      </div>
+      <div class="hero-facts">
+        <span><strong>1911</strong> Bến Nhà Rồng</span
+        ><span class="fact-line" aria-hidden="true"></span
+        ><span>Gần <strong>30 năm</strong> xa Tổ quốc</span
+        ><span class="fact-line" aria-hidden="true"></span
+        ><span><strong>1941</strong> Trở về Cao Bằng</span>
+      </div>
     </header>
-
-    <main class="lp-wrap">
-      <h2 class="lp-section-title">Dòng thời gian lịch sử</h2>
-
-      <p class="timeline-hint">Bấm vào một khoảng thời kỳ để phóng to khoảng đó; kéo dọc theo line hoặc bấm vào mốc để xem chi tiết</p>
-
-      <!-- Thanh line: mỗi khoảng có bong bóng chú thích phía trên + point nằm trên line -->
-      <div class="tl-line">
-        <div class="tl-bar" id="tlBar"></div>
-      </div>
-
-      <!-- Nội dung chi tiết của mốc đang chọn -->
-      <div class="tl-content" id="tlContent" hidden>
-        <div class="tl-nav">
-          <button class="tl-navbtn" id="tlPrev" type="button">‹ Trước</button>
-          <span class="tl-counter" id="tlCounter"></span>
-          <button class="tl-navbtn" id="tlNext" type="button">Sau ›</button>
+    <main>
+      <section
+        class="journey-section"
+        id="hanh-trinh"
+        aria-labelledby="journeyHeading"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Từng dấu chân, một khát vọng</p>
+            <h2 id="journeyHeading">Bốn chặng đường lịch sử</h2>
+          </div>
+          <a class="text-link" href="#nguon-tu-lieu">Nguồn tư liệu ↗</a>
         </div>
-        <div class="tl-slides-wrap">
-          <div class="tl-slides" id="tlSlides"></div>
+        <p class="section-intro">
+          Năm 1920 là bước ngoặt tìm thấy con đường cứu nước. Những năm tiếp
+          theo là quá trình truyền bá tư tưởng, xây dựng tổ chức và chuẩn bị trở
+          về lãnh đạo cách mạng.
+        </p>
+        <div
+          class="chapter-filters"
+          id="chapterFilters"
+          role="group"
+          aria-label="Chọn chặng đường"
+        ></div>
+        <div class="timeline-heading">
+          <h3 id="listHeading">Tất cả dấu mốc</h3>
+          <button
+            class="all-button"
+            id="showAll"
+            type="button"
+            aria-pressed="true"
+          >
+            Xem toàn bộ 21 mốc
+          </button>
         </div>
-      </div>
+        <div class="journey-layout">
+          <nav class="milestone-nav" aria-labelledby="listHeading">
+            <ol id="milestoneList"></ol>
+          </nav>
+          <div class="detail-column">
+            <div class="detail-nav">
+              <button id="tlPrev" type="button" aria-label="Mốc trước">
+                ← Trước</button
+              ><span
+                id="tlCounter"
+                role="status"
+                aria-live="polite"
+                aria-atomic="true"
+              ></span
+              ><button id="tlNext" type="button" aria-label="Mốc tiếp theo">
+                Sau →
+              </button>
+            </div>
+            <article
+              id="milestoneDetail"
+              class="milestone-detail"
+              aria-labelledby="detailTitle"
+              tabindex="-1"
+            ></article>
+          </div>
+        </div>
+        <noscript
+          ><p class="no-script">
+            Bật JavaScript để xem đủ 21 mốc và hình ảnh. Bạn vẫn có thể đọc
+            <a
+              href="https://hochiminh.vn/book/cuoc-doi-su-nghiep/bien-nien-tieu-su-ho-chi-minh/ho-chi-minh-tieu-su-bao-tang-ho-chi-minh-nxb-chinh-tri-quoc-gia-ha-noi-nam-2008-20"
+              >tiểu sử do Bảo tàng Hồ Chí Minh biên soạn</a
+            >.
+          </p></noscript
+        >
+      </section>
+      <section class="epilogue" aria-labelledby="epilogueTitle">
+        <figure>
+          <img
+            src="../img/hanh-trinh-hcm/khuoi-nam.jpg"
+            alt="Lán Khuổi Nậm tại Pác Bó, ảnh di tích do Bảo tàng Lịch sử Quốc gia giới thiệu"
+            width="600"
+            height="420"
+            loading="lazy"
+          />
+          <figcaption>
+            Lán Khuổi Nậm · Ảnh di tích, Bảo tàng Lịch sử Quốc gia
+          </figcaption>
+        </figure>
+        <div>
+          <p class="eyebrow">Tiếp nối hành trình · Tháng 5/1941</p>
+          <h2 id="epilogueTitle">Từ đường về đến con đường giành độc lập</h2>
+          <p>
+            Sau khi về nước, Nguyễn Ái Quốc chủ trì Hội nghị Trung ương VIII tại
+            Pác Bó (10–19/5/1941). Hội nghị đặt nhiệm vụ giải phóng dân tộc lên
+            hàng đầu và quyết định thành lập Mặt trận Việt Minh.
+          </p>
+          <p>
+            Đây là bước tiếp nối quan trọng của quá trình tìm đường, chuẩn bị
+            lực lượng và trực tiếp lãnh đạo cách mạng trong nước.
+          </p>
+          <a
+            class="text-link"
+            href="https://baotanglichsuquocgia.vn/vi/Articles/3097/14317/hoi-nghi-lan-thu-viii-ban-chap-hanh-trung-uong-djang-va-quyet-djinh-tien-hanh-cong-cuoc-giai-phong-dan-toc-tu-ngay-10-djen-ngay-19-5-1941.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Đọc tư liệu của Bảo tàng Lịch sử Quốc gia ↗</a
+          >
+        </div>
+      </section>
+      <section
+        class="sources-section"
+        id="nguon-tu-lieu"
+        aria-labelledby="sourcesTitle"
+      >
+        <p class="eyebrow">Đọc và đối chiếu</p>
+        <h2 id="sourcesTitle">Nguồn tư liệu chính thức</h2>
+        <p>
+          Nội dung được tóm lược từ các nguồn dưới đây, đối chiếu ngày
+          06/10/2026. Mỗi mốc có liên kết riêng; chú thích ảnh phân biệt ảnh tư
+          liệu, tài liệu và ảnh di tích chụp về sau.
+        </p>
+        <details>
+          <summary>Danh mục tài liệu tham khảo</summary>
+          <ol id="sourceList"></ol>
+        </details>
+      </section>
     </main>
-
-    <footer class="lp-footer">© Việt Nam Sử Ký — Dòng thời gian lịch sử dân tộc.</footer>
-
-    <script src="./data/dung-nuoc.js"></script>
-    <script src="./data/bac-thuoc.js"></script>
-    <script src="./data/doc-lap.js"></script>
-    <script src="./data/phong-kien.js"></script>
-    <script src="./data/phap-thuoc.js"></script>
-    <script src="./data/hien-dai.js"></script>
-    <script src="./data/details-extra.js"></script>
-    <script src="./data/img-map.js"></script>
-    <script src="./timeline.js"></script>
-    <script src="../loader.js"></script>
+    <footer>
+      <a href="../index.html">Việt Nam Sử Ký</a
+      ><span>HCM202 / Group 1 · Chuyên đề Hồ Chí Minh · 1911–1941</span
+      ><a href="#">Về đầu trang ↑</a>
+    </footer>
   </body>
 </html>
